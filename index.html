@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Congressional Trade Tracker</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!--
+    WHAT THIS FILE IS:
+    index.html is the skeleton of the page. It defines what exists on the page
+    (headings, buttons, containers) but not how it looks (that's styles.css)
+    or how it behaves (that's script.js).
+  -->
+
+  <header class="site-header">
+    <div class="header-inner">
+      <h1>Congressional Trade Tracker</h1>
+      <p class="tagline">
+        U.S. congressional stock trades filed under the STOCK Act —
+        with committee context and links to original public disclosures.
+      </p>
+    </div>
+  </header>
+
+  <main class="main-content">
+
+    <!-- Search and filter bar -->
+    <div class="controls">
+      <input
+        type="text"
+        id="search-input"
+        placeholder="Search by name, ticker, or state…"
+        aria-label="Search trades"
+      >
+      <select id="chamber-filter" aria-label="Filter by chamber">
+        <option value="all">House + Senate</option>
+        <option value="House">House only</option>
+        <option value="Senate">Senate only</option>
+      </select>
+      <select id="type-filter" aria-label="Filter by trade type">
+        <option value="all">All trade types</option>
+        <option value="buy">Purchases only</option>
+        <option value="sell">Sales only</option>
+      </select>
+      <button id="load-more" class="btn-load-more" style="display:none">
+        Load more trades
+      </button>
+    </div>
+
+    <!-- Status line: shows "Loading…" then trade count or errors -->
+    <p id="status-message" class="status">Loading trades and committee data…</p>
+
+    <!-- script.js injects trade cards into this div -->
+    <div id="trades-container"></div>
+
+    <!-- "Load more" button appears below the cards when there are more to show -->
+    <div id="load-more-wrap" style="display:none; text-align:center; margin:24px 0">
+      <button id="load-more-btn" class="btn-load-more">Load more trades ↓</button>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p><strong>Trade data</strong> from
+        <a href="https://housestockwatcher.com" target="_blank" rel="noopener">House Stock Watcher</a>
+        and
+        <a href="https://senatestockwatcher.com" target="_blank" rel="noopener">Senate Stock Watcher</a>
+        — community-maintained parsers of official STOCK Act filings.
+      </p>
+      <p><strong>Committee data</strong> from
+        <a href="https://github.com/unitedstates/congress-legislators" target="_blank" rel="noopener">unitedstates/congress-legislators</a>
+        (public domain).
+      </p>
+      <p><strong>Original filings</strong> at
+        <a href="https://disclosures-clerk.house.gov" target="_blank" rel="noopener">House Clerk</a>
+        and
+        <a href="https://efts.senate.gov" target="_blank" rel="noopener">Senate eFD</a>.
+      </p>
+      <p style="margin-top:12px; color:#7a8a9a; font-size:0.75rem">
+        This site presents public information for transparency purposes. Committee context is informational only.
+      </p>
+    </div>
+  </footer>
+
+  <!--
+    script.js loads at the bottom so that the HTML above is already loaded
+    into the browser before JavaScript tries to interact with it.
+  -->
+  <script src="script.js"></script>
+
+</body>
+</html>

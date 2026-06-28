@@ -1,0 +1,406 @@
+/*
+  WHAT THIS FILE IS:
+  CSS controls how the page looks — colors, fonts, spacing, layout.
+  HTML says "there is a card here"; CSS says "the card is white with rounded corners."
+
+  This file is organized in sections (Base → Header → Controls → Cards → Footer).
+  The /* ... *\/ blocks are comments — the browser ignores them, they're just notes.
+*/
+
+/* ============================================================
+   Base styles — applied to the whole page
+   ============================================================ */
+
+/* box-sizing: border-box makes sizing more predictable.
+   margin/padding: 0 removes browser default spacing. */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  color: #1a1a2e;
+  background: #f0f2f5;
+}
+
+a {
+  color: #2563eb;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* ============================================================
+   Site header
+   ============================================================ */
+
+.site-header {
+  background: #0f172a;
+  color: #fff;
+  padding: 28px 24px;
+  border-bottom: 3px solid #2563eb;
+}
+
+.header-inner {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.site-header h1 {
+  font-size: 1.7rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 4px;
+}
+
+.tagline {
+  color: #94a3b8;
+  font-size: 0.88rem;
+  max-width: 640px;
+}
+
+/* ============================================================
+   Main content area
+   ============================================================ */
+
+.main-content {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 24px 16px 48px;
+}
+
+/* ============================================================
+   Search / Filter controls
+   ============================================================ */
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+  align-items: center;
+}
+
+.controls input,
+.controls select {
+  padding: 8px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 7px;
+  font-size: 14px;
+  background: #fff;
+  color: #1a1a2e;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.controls input:focus,
+.controls select:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37,99,235,0.12);
+}
+
+.controls input {
+  flex: 1;
+  min-width: 200px;
+}
+
+/* ============================================================
+   Status line
+   ============================================================ */
+
+.status {
+  color: #64748b;
+  font-size: 0.85rem;
+  margin-bottom: 16px;
+}
+
+/* ============================================================
+   Trade cards
+   ============================================================ */
+
+.trade-card {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  overflow: hidden;
+  transition: box-shadow 0.15s ease;
+}
+
+.trade-card:hover {
+  box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+}
+
+/* ── Card top row: badge + ticker + name ── */
+
+.card-header {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 13px 16px 8px;
+}
+
+/* Buy/Sell/Exchange badge */
+.badge {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 3px 7px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.badge-buy      { background: #dcfce7; color: #15803d; }
+.badge-sell     { background: #fee2e2; color: #b91c1c; }
+.badge-exchange { background: #fef9c3; color: #92400e; }
+.badge-other    { background: #f1f5f9; color: #475569; }
+
+/* Stock ticker symbol */
+.ticker {
+  font-size: 1rem;
+  font-weight: 700;
+  font-family: 'Courier New', Courier, monospace;
+  color: #0f172a;
+  min-width: 48px;
+}
+
+/* Member name */
+.member-name {
+  font-weight: 600;
+  color: #0f172a;
+}
+
+/* State / district */
+.member-meta {
+  font-size: 0.8rem;
+  color: #64748b;
+}
+
+/* House / Senate tag */
+.chamber-tag {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: #ede9fe;
+  color: #5b21b6;
+  margin-left: auto;
+}
+
+/* ── Second row: amount + dates ── */
+
+.card-details {
+  padding: 0 16px 8px;
+  font-size: 0.83rem;
+  color: #475569;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+/* "data-label" trick: the CSS inserts the label text automatically */
+.card-details span::before {
+  content: attr(data-label) ': ';
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+/* ── Asset description ── */
+
+.asset-desc {
+  padding: 0 16px 10px;
+  font-size: 0.81rem;
+  color: #64748b;
+  font-style: italic;
+}
+
+/* ── Expand/collapse "Context & Source" button ── */
+
+.context-toggle {
+  width: 100%;
+  background: none;
+  border: none;
+  border-top: 1px solid #f1f5f9;
+  padding: 8px 16px;
+  text-align: left;
+  cursor: pointer;
+  font-size: 0.8rem;
+  color: #2563eb;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: inherit;
+}
+
+.context-toggle:hover {
+  background: #f8fafc;
+}
+
+/* Arrow icon rotates when panel opens */
+.toggle-arrow {
+  display: inline-block;
+  font-size: 0.65rem;
+  transition: transform 0.2s ease;
+  color: #94a3b8;
+}
+
+.context-toggle.open .toggle-arrow {
+  transform: rotate(180deg);
+}
+
+/* ── Context panel (hidden by default, shown when user clicks button) ── */
+
+.context-panel {
+  display: none;
+  padding: 14px 16px 16px;
+  border-top: 1px solid #f1f5f9;
+  background: #f8fafc;
+  font-size: 0.84rem;
+}
+
+.context-panel.visible {
+  display: block;
+}
+
+.context-section {
+  margin-bottom: 14px;
+}
+
+.context-section:last-child {
+  margin-bottom: 0;
+}
+
+.context-label {
+  font-weight: 600;
+  color: #374151;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 6px;
+}
+
+/* Committee list */
+.committee-list {
+  list-style: none;
+  padding: 0;
+}
+
+.committee-list li {
+  padding: 3px 0;
+  color: #4b5563;
+  font-size: 0.83rem;
+  padding-left: 12px;
+  position: relative;
+}
+
+.committee-list li::before {
+  content: '•';
+  color: #cbd5e1;
+  position: absolute;
+  left: 0;
+}
+
+/* Source filing link button */
+.source-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 12px;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 6px;
+  color: #1d4ed8;
+  font-size: 0.82rem;
+  font-weight: 500;
+  transition: background 0.15s;
+}
+
+.source-link:hover {
+  background: #dbeafe;
+  text-decoration: none;
+}
+
+/* ── No results message ── */
+
+.no-results {
+  text-align: center;
+  color: #94a3b8;
+  padding: 48px 0;
+  font-size: 0.95rem;
+}
+
+/* ── Load more button ── */
+
+.btn-load-more {
+  padding: 9px 20px;
+  background: #fff;
+  border: 1px solid #d1d5db;
+  border-radius: 7px;
+  cursor: pointer;
+  font-size: 0.88rem;
+  color: #374151;
+  font-family: inherit;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.btn-load-more:hover {
+  background: #f9fafb;
+  border-color: #9ca3af;
+}
+
+/* ── Error notice (shows if a data source fails) ── */
+
+.error-notice {
+  background: #fff7ed;
+  border: 1px solid #fed7aa;
+  border-radius: 7px;
+  padding: 10px 14px;
+  font-size: 0.83rem;
+  color: #92400e;
+  margin-bottom: 12px;
+}
+
+/* ============================================================
+   Footer
+   ============================================================ */
+
+.site-footer {
+  background: #0f172a;
+  color: #64748b;
+  padding: 28px 24px;
+  margin-top: 48px;
+  font-size: 0.8rem;
+  line-height: 1.9;
+}
+
+.footer-inner {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.site-footer a {
+  color: #60a5fa;
+}
+
+.site-footer strong {
+  color: #94a3b8;
+}
+
+/* ============================================================
+   Responsive (smaller screens)
+   ============================================================ */
+
+@media (max-width: 600px) {
+  .site-header h1 { font-size: 1.3rem; }
+  .card-header { gap: 6px; }
+  .chamber-tag { margin-left: 0; }
+}
