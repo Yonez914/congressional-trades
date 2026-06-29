@@ -1,24 +1,23 @@
 /*
   WHAT THIS FILE IS:
   JavaScript is the "brain" of the page. When the page loads it:
-    1. FETCH  — downloads trade and committee data from free public sources
+    1. FETCH  — loads the trade cache and committee data
     2. MATCH  — links each trade's member ID directly to their committee assignments
     3. BUILD  — creates the trade cards and injects them into the page
 
-  Data sources used:
-    - Trade data: Financial Modeling Prep (FMP) free API — financialmodelingprep.com
+  Data sources:
+    - Trade data: data/trades-cache.json — updated daily by GitHub Actions via FMP
     - Committee data: unitedstates/congress-legislators — unitedstates.github.io
 
-  FMP_API_KEY is loaded from config.js (that file is gitignored — never goes to GitHub).
+  No API key is needed in the browser. The cache file is pre-built and served statically.
 */
 
 // ─────────────────────────────────────────────────────────────────────
 // DATA SOURCE URLS
 // ─────────────────────────────────────────────────────────────────────
 
-// FMP_API_KEY comes from config.js, which loads before this file in index.html
-const SENATE_API_URL = `https://financialmodelingprep.com/stable/senate-latest?apikey=${FMP_API_KEY}`;
-const HOUSE_API_URL  = `https://financialmodelingprep.com/stable/house-latest?apikey=${FMP_API_KEY}`;
+// Trade cache — built by scripts/update-cache.mjs, served as a static file
+const CACHE_URL = 'data/trades-cache.json';
 
 // Committee data — official public domain JSON files (no API key needed)
 const COMMITTEES_URL  = 'https://unitedstates.github.io/congress-legislators/committees-current.json';
@@ -45,19 +44,11 @@ let bioguideByNameState  = {};   // `${lastName}_${state}` → bioguide (fallbac
 document.addEventListener('DOMContentLoaded', init);
 
 async function init() {
-  // Safety check: if config.js didn't load, FMP_API_KEY will be undefined
-  if (typeof FMP_API_KEY === 'undefined' || FMP_API_KEY === 'YOUR_KEY_HERE') {
-    showError('No API key found. Copy config.example.js to config.js and add your free FMP key.');
-    setStatus('Setup required — see error above.');
-    return;
-  }
-
   setStatus('Loading trades and committee data…');
 
-  const [senateResult, houseResult, committeesResult, membershipResult, legislatorsResult] =
+  const [cacheResult, committeesResult, membershipResult, legislatorsResult] =
     await Promise.allSettled([
-      fetchJSON(SENATE_API_URL),
-      fetchJSON(HOUSE_API_URL),
+      fetchJSON(CACHE_URL),
       fetchJSON(COMMITTEES_URL),
       fetchJSON(MEMBERSHIP_URL),
       fetchJSON(LEGISLATORS_URL),
@@ -120,72 +111,29 @@ async function init() {
     }
   }
 
-  // ── Normalize and combine trades ─────────────────────────────────────
+  // ── Load trades from cache ────────────────────────────────────────────
   let trades = [];
+  let updatedStr = '';
 
-  if (senateResult.status === 'fulfilled') {
-    const raw = Array.isArray(senateResult.value) ? senateResult.value : [];
-    trades = trades.concat(raw.map(t => normalizeTrade(t, 'Senate')));
+  if (cacheResult.status === 'fulfilled') {
+    const cache = cacheResult.value;
+    trades = Array.isArray(cache.trades) ? cache.trades : [];
+    if (cache.lastUpdated) {
+      const d = new Date(cache.lastUpdated).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+      updatedStr = ` — cache updated ${d}`;
+    }
   } else {
-    showError('Could not load Senate trade data. FMP API may be temporarily unavailable.');
+    showError('Could not load trade cache. If running locally, use a local server (e.g. npx serve .)');
   }
-
-  if (houseResult.status === 'fulfilled') {
-    const raw = Array.isArray(houseResult.value) ? houseResult.value : [];
-    trades = trades.concat(raw.map(t => normalizeTrade(t, 'House')));
-  } else {
-    showError('Could not load House trade data. FMP API may be temporarily unavailable.');
-  }
-
-  // Sort newest disclosure date first
-  trades.sort((a, b) => parseDate(b.disclosureDate) - parseDate(a.disclosureDate));
 
   allTrades    = trades;
   visibleCount = PAGE_SIZE;
 
-  setStatus(`${trades.length.toLocaleString()} trades loaded — showing most recent first.`);
+  setStatus(`${trades.length.toLocaleString()} trades loaded${updatedStr}`);
   renderVisible();
   wireFilters();
 }
 
-// ─────────────────────────────────────────────────────────────────────
-// NORMALIZE
-// FMP uses the same field names for both chambers (despite calling the
-// member ID "senateID" even on House records).
-// ─────────────────────────────────────────────────────────────────────
-
-function normalizeTrade(t, chamber) {
-  // district field: Senate = "KS" (state only), House = "PA03" (state + number)
-  const districtStr = t.district || '';
-  const isStateOnly = districtStr.length <= 2;
-  const state           = districtStr.slice(0, 2);
-  const districtDisplay = isStateOnly ? state : `${state}-${districtStr.slice(2).replace(/^0+/, '') || districtStr.slice(2)}`;
-
-  return {
-    chamber,
-    memberName:      t.office || `${t.firstName || ''} ${t.lastName || ''}`.trim(),
-    bioguide:        t.senateID || '',   // FMP's "senateID" = bioguide ID for both chambers
-    state,
-    districtDisplay: isStateOnly ? '' : districtDisplay,
-    ticker:          (t.symbol || '').toUpperCase().trim(),
-    assetDesc:       t.assetDescription || '',
-    tradeType:       classifyType(t.type || ''),
-    rawType:         t.type || '',
-    amount:          t.amount || '',
-    disclosureDate:  t.disclosureDate || '',
-    transactionDate: t.transactionDate || '',
-    ptrLink:         t.link || '',
-  };
-}
-
-// Map "Purchase" / "Sale" / "Sale (Full)" etc. → 'buy' | 'sell' | 'exchange' | 'other'
-function classifyType(raw) {
-  const s = raw.toLowerCase();
-  if (s.includes('purchase') || s === 'buy')  return 'buy';
-  if (s.includes('sale') || s === 'sell')      return 'sell';
-  if (s.includes('exchange'))                  return 'exchange';
-  return 'other';
-}
 
 // ─────────────────────────────────────────────────────────────────────
 // COMMITTEE LOOKUP
