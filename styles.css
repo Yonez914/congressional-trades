@@ -309,6 +309,13 @@ a:hover {
   left: 0;
 }
 
+.committee-desc {
+  font-size: 0.73rem;
+  color: #94a3b8;
+  margin-top: 2px;
+  line-height: 1.4;
+}
+
 /* Source filing link button */
 .source-link {
   display: inline-flex;

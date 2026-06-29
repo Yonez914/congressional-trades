@@ -21,8 +21,9 @@ const SENATE_API_URL = `https://financialmodelingprep.com/stable/senate-latest?a
 const HOUSE_API_URL  = `https://financialmodelingprep.com/stable/house-latest?apikey=${FMP_API_KEY}`;
 
 // Committee data — official public domain JSON files (no API key needed)
-const COMMITTEES_URL = 'https://unitedstates.github.io/congress-legislators/committees-current.json';
-const MEMBERSHIP_URL = 'https://unitedstates.github.io/congress-legislators/committee-membership-current.json';
+const COMMITTEES_URL  = 'https://unitedstates.github.io/congress-legislators/committees-current.json';
+const MEMBERSHIP_URL  = 'https://unitedstates.github.io/congress-legislators/committee-membership-current.json';
+const LEGISLATORS_URL = 'https://unitedstates.github.io/congress-legislators/legislators-current.json';
 
 // ─────────────────────────────────────────────────────────────────────
 // APP STATE
@@ -34,7 +35,8 @@ const PAGE_SIZE          = 50;
 
 // committeesByBioguide: maps a member's unique government ID → their committee list
 // FMP's "senateID" field IS the bioguide ID (used for both chambers despite the name)
-let committeesByBioguide = {};   // bioguide → [{name, rank, title}]
+let committeesByBioguide = {};   // bioguide → [{name, description, rank, title}]
+let bioguideByNameState  = {};   // `${lastName}_${state}` → bioguide (fallback when FMP omits bioguide)
 
 // ─────────────────────────────────────────────────────────────────────
 // ENTRY POINT
@@ -52,19 +54,31 @@ async function init() {
 
   setStatus('Loading trades and committee data…');
 
-  const [senateResult, houseResult, committeesResult, membershipResult] =
+  const [senateResult, houseResult, committeesResult, membershipResult, legislatorsResult] =
     await Promise.allSettled([
       fetchJSON(SENATE_API_URL),
       fetchJSON(HOUSE_API_URL),
       fetchJSON(COMMITTEES_URL),
       fetchJSON(MEMBERSHIP_URL),
+      fetchJSON(LEGISLATORS_URL),
     ]);
 
-  // ── Build committee name lookup: thomas_id → display name ───────────
-  const committeeNames = {};
+  // ── Build committee name + jurisdiction lookup: thomas_id → display name / description ──
+  const committeeNames        = {};
+  const committeeJurisdiction = {};
   if (committeesResult.status === 'fulfilled') {
     for (const c of committeesResult.value) {
       committeeNames[c.thomas_id] = c.name;
+      if (c.jurisdiction) committeeJurisdiction[c.thomas_id] = c.jurisdiction;
+      // Index subcommittees — their IDs appear in membership data but not at top level
+      for (const sub of (c.subcommittees || [])) {
+        if (sub.thomas_id) {
+          // Membership JSON uses concatenated key: parent thomas_id + sub thomas_id (e.g. "SSAF" + "13" = "SSAF13")
+          const subKey = c.thomas_id + sub.thomas_id;
+          committeeNames[subKey] = `${c.name} — ${sub.name}`;
+          if (c.jurisdiction) committeeJurisdiction[subKey] = c.jurisdiction;
+        }
+      }
     }
   } else {
     showError('Could not load committee names. Committee context will be unavailable.');
@@ -80,14 +94,30 @@ async function init() {
         if (!bioguide) continue;
         if (!committeesByBioguide[bioguide]) committeesByBioguide[bioguide] = [];
         committeesByBioguide[bioguide].push({
-          name:  committeeNames[committeeId] || committeeId,
-          rank:  m.rank,
-          title: m.title || null,
+          name:        committeeNames[committeeId] || committeeId,
+          description: committeeJurisdiction[committeeId] || null,
+          rank:        m.rank,
+          title:       m.title || null,
         });
       }
     }
   } else {
     showError('Could not load committee membership data. Committee context will be unavailable.');
+  }
+
+  // ── Build lastName+state → bioguide fallback map ─────────────────────
+  // Used when FMP omits the bioguide ID (common for House records).
+  // Key is lastName+state so "Bill Cassidy" and "William Cassidy" both match.
+  if (legislatorsResult.status === 'fulfilled') {
+    for (const leg of legislatorsResult.value) {
+      const bioguide = leg.id?.bioguide;
+      if (!bioguide) continue;
+      const last  = (leg.name?.last || '').toLowerCase().replace(/[^a-z]/g, '');
+      const terms = leg.terms || [];
+      const state = (terms[terms.length - 1]?.state || '').toUpperCase();
+      if (!last || !state) continue;
+      bioguideByNameState[`${last}_${state}`] = bioguide;
+    }
   }
 
   // ── Normalize and combine trades ─────────────────────────────────────
@@ -159,12 +189,26 @@ function classifyType(raw) {
 
 // ─────────────────────────────────────────────────────────────────────
 // COMMITTEE LOOKUP
-// Direct O(1) lookup using the bioguide ID from FMP — no name matching needed.
+// Primary: O(1) bioguide lookup from FMP's senateID field.
+// Fallback: lastName+state → bioguide map for records where FMP omits bioguide.
 // ─────────────────────────────────────────────────────────────────────
 
-function getCommitteesForMember(bioguide) {
-  if (!bioguide) return [];
-  return committeesByBioguide[bioguide] || [];
+function getCommitteesForMember(bioguide, memberName, state) {
+  if (bioguide && committeesByBioguide[bioguide]?.length) {
+    return committeesByBioguide[bioguide];
+  }
+  if (memberName && state) {
+    const words   = memberName.trim().split(/\s+/);
+    const rawLast = words[words.length - 1];
+    const last    = rawLast.toLowerCase().replace(/[^a-z]/g, '');
+    const key     = `${last}_${state.toUpperCase()}`;
+    const derived = bioguideByNameState[key];
+    if (derived && committeesByBioguide[derived]?.length) {
+      console.log(`[committees] fallback matched: "${memberName}" ${state} → ${derived}`);
+      return committeesByBioguide[derived];
+    }
+  }
+  return [];
 }
 
 // ─────────────────────────────────────────────────────────────────────
@@ -241,7 +285,7 @@ function renderVisible() {
 // ─────────────────────────────────────────────────────────────────────
 
 function buildCard(trade) {
-  const committees = getCommitteesForMember(trade.bioguide);
+  const committees = getCommitteesForMember(trade.bioguide, trade.memberName, trade.state);
 
   const badgeClass = { buy: 'badge-buy', sell: 'badge-sell', exchange: 'badge-exchange' }[trade.tradeType] || 'badge-other';
   const badgeLabel = { buy: 'Purchase', sell: 'Sale', exchange: 'Exchange' }[trade.tradeType] || trade.rawType || 'Other';
@@ -305,7 +349,10 @@ function buildContextHTML(trade, committees) {
     html += '<ul class="committee-list">';
     for (const c of committees) {
       const titlePart = c.title ? ` <em style="color:#94a3b8">(${escHtml(c.title)})</em>` : '';
-      html += `<li>${escHtml(c.name)}${titlePart}</li>`;
+      const descPart  = c.description
+        ? `<div class="committee-desc">${escHtml(c.description)}</div>`
+        : '';
+      html += `<li>${escHtml(c.name)}${titlePart}${descPart}</li>`;
     }
     html += '</ul>';
   } else {
