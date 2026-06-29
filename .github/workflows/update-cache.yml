@@ -1,0 +1,40 @@
+name: Update Trades Cache
+
+on:
+  schedule:
+    - cron: '0 8 * * *'  # daily at 8am UTC
+  workflow_dispatch:       # "Run workflow" button in GitHub Actions tab
+
+permissions:
+  contents: write          # allows the bot to commit and push trades-cache.json
+
+jobs:
+  update-cache:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Fetch latest trades and update cache
+        env:
+          FMP_API_KEY: ${{ secrets.FMP_API_KEY }}
+        run: node scripts/update-cache.mjs
+
+      - name: Commit updated cache (only if changed)
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/trades-cache.json
+          if git diff --cached --quiet; then
+            echo "No new trades — cache unchanged, nothing to commit."
+          else
+            git commit -m "chore: update trades cache [skip ci]"
+            git push
+            echo "Cache updated and pushed."
+          fi
