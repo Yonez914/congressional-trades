@@ -1,18 +1,7 @@
-/*
-  WHAT THIS FILE IS:
-  CSS controls how the page looks — colors, fonts, spacing, layout.
-  HTML says "there is a card here"; CSS says "the card is white with rounded corners."
-
-  This file is organized in sections (Base → Header → Controls → Cards → Footer).
-  The /* ... *\/ blocks are comments — the browser ignores them, they're just notes.
-*/
-
 /* ============================================================
-   Base styles — applied to the whole page
+   Base styles
    ============================================================ */
 
-/* box-sizing: border-box makes sizing more predictable.
-   margin/padding: 0 removes browser default spacing. */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -20,15 +9,15 @@
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   font-size: 15px;
   line-height: 1.6;
-  color: #1a1a2e;
-  background: #f0f2f5;
+  color: #e2e8f0;
+  background: #080c14;
 }
 
 a {
-  color: #2563eb;
+  color: #60a5fa;
   text-decoration: none;
 }
 
@@ -41,7 +30,7 @@ a:hover {
    ============================================================ */
 
 .site-header {
-  background: #0f172a;
+  background: #0b1220;
   color: #fff;
   padding: 28px 24px;
   border-bottom: 3px solid #2563eb;
@@ -57,12 +46,55 @@ a:hover {
   font-weight: 700;
   letter-spacing: -0.02em;
   margin-bottom: 4px;
+  color: #f1f5f9;
 }
 
 .tagline {
-  color: #94a3b8;
+  color: #64748b;
   font-size: 0.88rem;
   max-width: 640px;
+}
+
+/* ============================================================
+   Stats bar
+   ============================================================ */
+
+.stats-bar {
+  background: #0b1220;
+  border-bottom: 1px solid #1a2744;
+  padding: 0 24px;
+}
+
+.stats-bar-inner {
+  max-width: 960px;
+  margin: 0 auto;
+  display: flex;
+}
+
+.stat-chip {
+  padding: 16px 28px 16px 0;
+  flex: 1;
+}
+
+.stat-chip + .stat-chip {
+  border-left: 1px solid #1a2744;
+  padding-left: 28px;
+}
+
+.stat-value {
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: #60a5fa;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.stat-label {
+  font-size: 0.7rem;
+  color: #334155;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-top: 3px;
 }
 
 /* ============================================================
@@ -73,6 +105,32 @@ a:hover {
   max-width: 960px;
   margin: 0 auto;
   padding: 24px 16px 48px;
+}
+
+/* ============================================================
+   Value statement
+   ============================================================ */
+
+.value-statement {
+  border-left: 3px solid #2563eb;
+  background: #0b1627;
+  padding: 14px 18px;
+  border-radius: 0 6px 6px 0;
+  margin-bottom: 20px;
+}
+
+.value-headline {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #cbd5e1;
+  line-height: 1.55;
+  margin-bottom: 6px;
+}
+
+.value-note {
+  font-size: 0.8rem;
+  color: #475569;
+  line-height: 1.5;
 }
 
 /* ============================================================
@@ -90,19 +148,20 @@ a:hover {
 .controls input,
 .controls select {
   padding: 8px 12px;
-  border: 1px solid #d1d5db;
+  border: 1px solid #1a2744;
   border-radius: 7px;
   font-size: 14px;
-  background: #fff;
-  color: #1a1a2e;
+  background: #0f1623;
+  color: #e2e8f0;
   outline: none;
   transition: border-color 0.15s;
+  font-family: inherit;
 }
 
 .controls input:focus,
 .controls select:focus {
-  border-color: #2563eb;
-  box-shadow: 0 0 0 3px rgba(37,99,235,0.12);
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59,130,246,0.12);
 }
 
 .controls input {
@@ -110,12 +169,21 @@ a:hover {
   min-width: 200px;
 }
 
+.controls input::placeholder {
+  color: #334155;
+}
+
+.controls select option {
+  background: #0f1623;
+  color: #e2e8f0;
+}
+
 /* ============================================================
    Status line
    ============================================================ */
 
 .status {
-  color: #64748b;
+  color: #334155;
   font-size: 0.85rem;
   margin-bottom: 16px;
 }
@@ -125,16 +193,17 @@ a:hover {
    ============================================================ */
 
 .trade-card {
-  background: #fff;
-  border: 1px solid #e2e8f0;
-  border-radius: 10px;
-  margin-bottom: 10px;
+  background: #0f1623;
+  border: 1px solid #1a2744;
+  border-radius: 8px;
+  margin-bottom: 8px;
   overflow: hidden;
-  transition: box-shadow 0.15s ease;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
 .trade-card:hover {
-  box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+  border-color: #2a3f6a;
+  box-shadow: 0 0 0 1px #2a3f6a;
 }
 
 /* ── Card top row: badge + ticker + name ── */
@@ -153,41 +222,41 @@ a:hover {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  padding: 3px 7px;
+  padding: 3px 8px;
   border-radius: 4px;
   white-space: nowrap;
 }
 
-.badge-buy      { background: #dcfce7; color: #15803d; }
-.badge-sell     { background: #fee2e2; color: #b91c1c; }
-.badge-exchange { background: #fef9c3; color: #92400e; }
-.badge-other    { background: #f1f5f9; color: #475569; }
+.badge-buy      { background: #052e16; color: #4ade80; }
+.badge-sell     { background: #2d0a0a; color: #f87171; }
+.badge-exchange { background: #2d1a00; color: #fbbf24; }
+.badge-other    { background: #1a2238; color: #64748b; }
 
 /* Party badge */
 .party-badge { font-size: 0.68rem; font-weight: 700; padding: 2px 6px; border-radius: 4px; white-space: nowrap; letter-spacing: 0.04em; }
-.party-r { background: #fee2e2; color: #b91c1c; }
-.party-d { background: #dbeafe; color: #1d4ed8; }
-.party-i { background: #f3e8ff; color: #7c3aed; }
+.party-r { background: #2d0a0a; color: #f87171; }
+.party-d { background: #0a1a3a; color: #60a5fa; }
+.party-i { background: #1e1a3a; color: #a78bfa; }
 
 /* Stock ticker symbol */
 .ticker {
-  font-size: 1rem;
+  font-size: 1.05rem;
   font-weight: 700;
   font-family: 'Courier New', Courier, monospace;
-  color: #0f172a;
+  color: #f1f5f9;
   min-width: 48px;
 }
 
 /* Member name */
 .member-name {
   font-weight: 600;
-  color: #0f172a;
+  color: #e2e8f0;
 }
 
 /* State / district */
 .member-meta {
   font-size: 0.8rem;
-  color: #64748b;
+  color: #475569;
 }
 
 /* House / Senate tag */
@@ -197,8 +266,8 @@ a:hover {
   letter-spacing: 0.04em;
   padding: 2px 6px;
   border-radius: 4px;
-  background: #ede9fe;
-  color: #5b21b6;
+  background: #1a2744;
+  color: #818cf8;
   margin-left: auto;
 }
 
@@ -207,31 +276,30 @@ a:hover {
 .card-details {
   padding: 0 16px 8px;
   font-size: 0.83rem;
-  color: #475569;
+  color: #64748b;
   display: flex;
   flex-wrap: wrap;
   gap: 14px;
 }
 
-/* "data-label" trick: the CSS inserts the label text automatically */
 .card-details span::before {
   content: attr(data-label) ': ';
-  color: #94a3b8;
+  color: #334155;
   font-weight: 500;
 }
 
 /* ── Disclosure delay chip ── */
 
-.delay-low  { color: #64748b; }
+.delay-low  { color: #475569; }
 .delay-med  { color: #d97706; font-weight: 600; }
-.delay-high { color: #dc2626; font-weight: 600; }
+.delay-high { color: #ef4444; font-weight: 600; }
 
 /* ── Asset description ── */
 
 .asset-desc {
   padding: 0 16px 10px;
   font-size: 0.81rem;
-  color: #64748b;
+  color: #475569;
   font-style: italic;
 }
 
@@ -241,20 +309,21 @@ a:hover {
   width: 100%;
   background: none;
   border: none;
-  border-top: 1px solid #f1f5f9;
+  border-top: 1px solid #111d30;
   padding: 8px 16px;
   text-align: left;
   cursor: pointer;
   font-size: 0.8rem;
-  color: #2563eb;
+  color: #3b82f6;
   display: flex;
   align-items: center;
   gap: 6px;
   font-family: inherit;
+  transition: background 0.15s;
 }
 
 .context-toggle:hover {
-  background: #f8fafc;
+  background: #0d1828;
 }
 
 /* Arrow icon rotates when panel opens */
@@ -262,20 +331,20 @@ a:hover {
   display: inline-block;
   font-size: 0.65rem;
   transition: transform 0.2s ease;
-  color: #94a3b8;
+  color: #334155;
 }
 
 .context-toggle.open .toggle-arrow {
   transform: rotate(180deg);
 }
 
-/* ── Context panel (hidden by default, shown when user clicks button) ── */
+/* ── Context panel ── */
 
 .context-panel {
   display: none;
   padding: 14px 16px 10px;
-  border-top: 1px solid #f1f5f9;
-  background: #f8fafc;
+  border-top: 1px solid #111d30;
+  background: #0d1520;
   font-size: 0.84rem;
 }
 
@@ -293,7 +362,7 @@ a:hover {
 
 .context-label {
   font-weight: 600;
-  color: #374151;
+  color: #334155;
   font-size: 0.78rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -308,7 +377,7 @@ a:hover {
 
 .committee-list li {
   padding: 3px 0;
-  color: #4b5563;
+  color: #64748b;
   font-size: 0.83rem;
   padding-left: 12px;
   position: relative;
@@ -316,14 +385,14 @@ a:hover {
 
 .committee-list li::before {
   content: '•';
-  color: #cbd5e1;
+  color: #2a3f6a;
   position: absolute;
   left: 0;
 }
 
 .committee-desc {
   font-size: 0.73rem;
-  color: #94a3b8;
+  color: #334155;
   margin-top: 2px;
   line-height: 1.4;
 }
@@ -334,17 +403,18 @@ a:hover {
   align-items: center;
   gap: 5px;
   padding: 6px 12px;
-  background: #eff6ff;
-  border: 1px solid #bfdbfe;
+  background: #0a1631;
+  border: 1px solid #1a3060;
   border-radius: 6px;
-  color: #1d4ed8;
+  color: #60a5fa;
   font-size: 0.82rem;
   font-weight: 500;
-  transition: background 0.15s;
+  transition: background 0.15s, border-color 0.15s;
 }
 
 .source-link:hover {
-  background: #dbeafe;
+  background: #112040;
+  border-color: #2563eb;
   text-decoration: none;
 }
 
@@ -352,7 +422,7 @@ a:hover {
 
 .no-results {
   text-align: center;
-  color: #94a3b8;
+  color: #334155;
   padding: 48px 0;
   font-size: 0.95rem;
 }
@@ -361,30 +431,31 @@ a:hover {
 
 .btn-load-more {
   padding: 9px 20px;
-  background: #fff;
-  border: 1px solid #d1d5db;
+  background: #0f1623;
+  border: 1px solid #1a2744;
   border-radius: 7px;
   cursor: pointer;
   font-size: 0.88rem;
-  color: #374151;
+  color: #64748b;
   font-family: inherit;
-  transition: background 0.15s, border-color 0.15s;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
 }
 
 .btn-load-more:hover {
-  background: #f9fafb;
-  border-color: #9ca3af;
+  background: #152038;
+  border-color: #2a3f6a;
+  color: #94a3b8;
 }
 
-/* ── Error notice (shows if a data source fails) ── */
+/* ── Error notice ── */
 
 .error-notice {
-  background: #fff7ed;
-  border: 1px solid #fed7aa;
+  background: #1c0e00;
+  border: 1px solid #7c3500;
   border-radius: 7px;
   padding: 10px 14px;
   font-size: 0.83rem;
-  color: #92400e;
+  color: #fb923c;
   margin-bottom: 12px;
 }
 
@@ -393,10 +464,11 @@ a:hover {
    ============================================================ */
 
 .site-footer {
-  background: #0f172a;
-  color: #64748b;
+  background: #060a10;
+  color: #334155;
   padding: 28px 24px;
   margin-top: 48px;
+  border-top: 1px solid #0f1a2e;
   font-size: 0.8rem;
   line-height: 1.9;
 }
@@ -407,11 +479,11 @@ a:hover {
 }
 
 .site-footer a {
-  color: #60a5fa;
+  color: #3b82f6;
 }
 
 .site-footer strong {
-  color: #94a3b8;
+  color: #475569;
 }
 
 /* ============================================================
@@ -422,4 +494,10 @@ a:hover {
   .site-header h1 { font-size: 1.3rem; }
   .card-header { gap: 6px; }
   .chamber-tag { margin-left: 0; }
+  .stats-bar-inner { flex-wrap: wrap; }
+  .stat-chip { flex: 1 1 45%; min-width: 140px; }
+  .stat-chip + .stat-chip { border-left: none; padding-left: 0; }
+  .stat-chip:nth-child(n+3) { border-top: 1px solid #1a2744; padding-top: 14px; }
+  .value-headline { font-size: 0.88rem; }
+  .value-note { font-size: 0.75rem; }
 }

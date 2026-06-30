@@ -4,28 +4,33 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Congressional Trade Tracker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
-  <!--
-    WHAT THIS FILE IS:
-    index.html is the skeleton of the page. It defines what exists on the page
-    (headings, buttons, containers) but not how it looks (that's styles.css)
-    or how it behaves (that's script.js).
-  -->
 
   <header class="site-header">
     <div class="header-inner">
       <h1>Congressional Trade Tracker</h1>
       <p class="tagline">
-        U.S. congressional stock trades filed under the STOCK Act —
-        with committee context and links to original public disclosures.
+        STOCK Act filings from U.S. lawmakers — updated daily, with committee context and links to original public disclosures.
       </p>
     </div>
   </header>
 
+  <!-- Dashboard stats bar — populated by script.js after trades load -->
+  <div class="stats-bar">
+    <div class="stats-bar-inner" id="stats-bar"></div>
+  </div>
+
   <main class="main-content">
+
+    <!-- Value statement / honest framing -->
+    <div class="value-statement">
+      <p class="value-headline">See which lawmakers trade stocks in industries they regulate — and trace every trade back to the official public filing.</p>
+      <p class="value-note">⏱ Trades are disclosed up to 45 days after they happen. This tool is for understanding patterns and conflicts of interest — not copy-trading.</p>
+    </div>
 
     <!-- Search and filter bar -->
     <div class="controls">
@@ -56,13 +61,13 @@
       </button>
     </div>
 
-    <!-- Status line: shows "Loading…" then trade count or errors -->
+    <!-- Status line: shows "Loading…" then trade count -->
     <p id="status-message" class="status">Loading trades and committee data…</p>
 
-    <!-- script.js injects trade cards into this div -->
+    <!-- script.js injects trade cards here -->
     <div id="trades-container"></div>
 
-    <!-- "Load more" button appears below the cards when there are more to show -->
+    <!-- "Load more" button -->
     <div id="load-more-wrap" style="display:none; text-align:center; margin:24px 0">
       <button id="load-more-btn" class="btn-load-more">Load more trades ↓</button>
     </div>
@@ -73,7 +78,7 @@
     <div class="footer-inner">
       <p><strong>Trade data</strong> from
         <a href="https://financialmodelingprep.com" target="_blank" rel="noopener">Financial Modeling Prep (FMP)</a>
-        — aggregated from official STOCK Act filings and updated daily.
+        and <a href="https://github.com/timothycarambat/senate-stock-watcher-data" target="_blank" rel="noopener">Senate Stock Watcher</a> — aggregated from official STOCK Act filings and updated daily.
       </p>
       <p><strong>Committee data</strong> from
         <a href="https://github.com/unitedstates/congress-legislators" target="_blank" rel="noopener">unitedstates/congress-legislators</a>
@@ -84,16 +89,12 @@
         and
         <a href="https://efts.senate.gov" target="_blank" rel="noopener">Senate eFD</a>.
       </p>
-      <p style="margin-top:12px; color:#7a8a9a; font-size:0.75rem">
+      <p style="margin-top:12px; color:#334155; font-size:0.75rem">
         This site presents public information for transparency purposes. Committee context is informational only.
       </p>
     </div>
   </footer>
 
-  <!--
-    script.js loads at the bottom so that the HTML above is already loaded
-    into the browser before JavaScript tries to interact with it.
-  -->
   <script src="script.js"></script>
 
 </body>

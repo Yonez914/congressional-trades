@@ -135,6 +135,7 @@ async function init() {
   allTrades    = trades;
   visibleCount = PAGE_SIZE;
 
+  buildStatsBar();
   setStatus(`${trades.length.toLocaleString()} trades loaded${updatedStr}`);
   renderVisible();
   wireFilters();
@@ -205,6 +206,44 @@ function applyFilters() {
 function loadMore() {
   visibleCount += PAGE_SIZE;
   renderVisible();
+}
+
+// ─────────────────────────────────────────────────────────────────────
+// STATS BAR
+// ─────────────────────────────────────────────────────────────────────
+
+function buildStatsBar() {
+  const container = document.getElementById('stats-bar');
+  if (!container || allTrades.length === 0) return;
+
+  const memberSet   = new Set(allTrades.map(t => t.bioguide || t.memberName));
+  const memberCount = memberSet.size;
+
+  const cutoff    = new Date();
+  cutoff.setDate(cutoff.getDate() - 30);
+  const cutoffStr = cutoff.toISOString().slice(0, 10);
+  const recentCount = allTrades.filter(t => t.disclosureDate >= cutoffStr).length;
+
+  let dCount = 0, rCount = 0;
+  for (const t of allTrades) {
+    const p = t.bioguide ? (partyByBioguide[t.bioguide] || '') : '';
+    if (p === 'D') dCount++;
+    else if (p === 'R') rCount++;
+  }
+  const total = dCount + rCount;
+  const dPct  = total ? Math.round(dCount / total * 100) : 0;
+  const rPct  = total ? 100 - dPct : 0;
+
+  const stats = [
+    { value: allTrades.length.toLocaleString(), label: 'Total Trades' },
+    { value: memberCount.toLocaleString(),       label: 'Active Members' },
+    { value: recentCount.toLocaleString(),        label: 'Trades Last 30 Days' },
+    { value: `${dPct}% D · ${rPct}% R`,          label: 'By Party' },
+  ];
+
+  container.innerHTML = stats
+    .map(s => `<div class="stat-chip"><div class="stat-value">${s.value}</div><div class="stat-label">${s.label}</div></div>`)
+    .join('');
 }
 
 // ─────────────────────────────────────────────────────────────────────
