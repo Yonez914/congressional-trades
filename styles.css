@@ -91,7 +91,7 @@ a:hover {
 
 .stat-label {
   font-size: 0.7rem;
-  color: #334155;
+  color: #64748b;
   text-transform: uppercase;
   letter-spacing: 0.07em;
   margin-top: 3px;
@@ -129,7 +129,7 @@ a:hover {
 
 .value-note {
   font-size: 0.8rem;
-  color: #475569;
+  color: #64748b;
   line-height: 1.5;
 }
 
@@ -183,7 +183,7 @@ a:hover {
    ============================================================ */
 
 .status {
-  color: #334155;
+  color: #64748b;
   font-size: 0.85rem;
   margin-bottom: 16px;
 }
@@ -256,7 +256,7 @@ a:hover {
 /* State / district */
 .member-meta {
   font-size: 0.8rem;
-  color: #475569;
+  color: #6b7fa3;
 }
 
 /* House / Senate tag */
@@ -276,7 +276,7 @@ a:hover {
 .card-details {
   padding: 0 16px 8px;
   font-size: 0.83rem;
-  color: #64748b;
+  color: #94a3b8;
   display: flex;
   flex-wrap: wrap;
   gap: 14px;
@@ -284,13 +284,13 @@ a:hover {
 
 .card-details span::before {
   content: attr(data-label) ': ';
-  color: #334155;
+  color: #64748b;
   font-weight: 500;
 }
 
 /* ── Disclosure delay chip ── */
 
-.delay-low  { color: #475569; }
+.delay-low  { color: #64748b; }
 .delay-med  { color: #d97706; font-weight: 600; }
 .delay-high { color: #ef4444; font-weight: 600; }
 
@@ -299,7 +299,7 @@ a:hover {
 .asset-desc {
   padding: 0 16px 10px;
   font-size: 0.81rem;
-  color: #475569;
+  color: #64748b;
   font-style: italic;
 }
 
@@ -362,7 +362,7 @@ a:hover {
 
 .context-label {
   font-weight: 600;
-  color: #334155;
+  color: #64748b;
   font-size: 0.78rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -377,7 +377,7 @@ a:hover {
 
 .committee-list li {
   padding: 3px 0;
-  color: #64748b;
+  color: #94a3b8;
   font-size: 0.83rem;
   padding-left: 12px;
   position: relative;
