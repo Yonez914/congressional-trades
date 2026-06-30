@@ -151,9 +151,10 @@ async function main() {
   }
 
   // 5. Sort newest disclosure date first
+  // Fall back to transactionDate so SSW backfill records (no disclosureDate) sort correctly.
   cache.trades.sort((a, b) => {
-    const da = a.disclosureDate ? new Date(a.disclosureDate).getTime() : 0;
-    const db = b.disclosureDate ? new Date(b.disclosureDate).getTime() : 0;
+    const da = new Date(a.disclosureDate || a.transactionDate || '2000-01-01').getTime();
+    const db = new Date(b.disclosureDate || b.transactionDate || '2000-01-01').getTime();
     return db - da;
   });
 

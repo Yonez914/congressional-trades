@@ -36,6 +36,8 @@ const PAGE_SIZE          = 50;
 // FMP's "senateID" field IS the bioguide ID (used for both chambers despite the name)
 let committeesByBioguide = {};   // bioguide → [{name, description, rank, title}]
 let bioguideByNameState  = {};   // `${lastName}_${state}` → bioguide (fallback when FMP omits bioguide)
+let partyByBioguide      = {};   // bioguide → 'R'|'D'|'I'
+let currentSort          = 'disclosureDate';
 
 // ─────────────────────────────────────────────────────────────────────
 // ENTRY POINT
@@ -103,11 +105,15 @@ async function init() {
     for (const leg of legislatorsResult.value) {
       const bioguide = leg.id?.bioguide;
       if (!bioguide) continue;
-      const last  = (leg.name?.last || '').toLowerCase().replace(/[^a-z]/g, '');
-      const terms = leg.terms || [];
-      const state = (terms[terms.length - 1]?.state || '').toUpperCase();
+      const last     = (leg.name?.last || '').toLowerCase().replace(/[^a-z]/g, '');
+      const terms    = leg.terms || [];
+      const lastTerm = terms[terms.length - 1] || {};
+      const state    = (lastTerm.state || '').toUpperCase();
       if (!last || !state) continue;
       bioguideByNameState[`${last}_${state}`] = bioguide;
+      const rawParty = lastTerm.party || '';
+      partyByBioguide[bioguide] = rawParty === 'Republican' ? 'R'
+        : rawParty === 'Democrat' ? 'D' : rawParty ? 'I' : '';
     }
   }
 
@@ -146,7 +152,8 @@ function getCommitteesForMember(bioguide, memberName, state) {
     return committeesByBioguide[bioguide];
   }
   if (memberName && state) {
-    const words   = memberName.trim().split(/\s+/);
+    const clean   = normalizeName(memberName);
+    const words   = clean.trim().split(/\s+/);
     const rawLast = words[words.length - 1];
     const last    = rawLast.toLowerCase().replace(/[^a-z]/g, '');
     const key     = `${last}_${state.toUpperCase()}`;
@@ -167,6 +174,10 @@ function wireFilters() {
   document.getElementById('search-input').addEventListener('input', applyFilters);
   document.getElementById('chamber-filter').addEventListener('change', applyFilters);
   document.getElementById('type-filter').addEventListener('change', applyFilters);
+  document.getElementById('sort-control').addEventListener('change', e => {
+    currentSort = e.target.value;
+    applyFilters();
+  });
   document.getElementById('load-more-btn').addEventListener('click', loadMore);
 }
 
@@ -202,7 +213,8 @@ function loadMore() {
 
 function renderVisible() {
   const filtered = getFilteredTrades();
-  const slice    = filtered.slice(0, visibleCount);
+  const sorted   = sortTrades(filtered, currentSort);
+  const slice    = sorted.slice(0, visibleCount);
   const container = document.getElementById('trades-container');
   container.innerHTML = '';
 
@@ -229,6 +241,50 @@ function renderVisible() {
 }
 
 // ─────────────────────────────────────────────────────────────────────
+// TEXT / SORT HELPERS
+// ─────────────────────────────────────────────────────────────────────
+
+function decodeEntities(str) {
+  if (!str) return '';
+  const txt = document.createElement('textarea');
+  txt.innerHTML = str;
+  return txt.value;
+}
+
+function normalizeName(name) {
+  if (!name) return '';
+  name = name.replace(/\s+,/g, ',');
+  name = name.replace(/,\s*(Jr\.?|Sr\.?|II|III|IV|V)$/i, '');
+  name = name.replace(/\s+[A-Z]\.?\s+/g, ' ');
+  return name.trim();
+}
+
+function parseAmountLower(str) {
+  if (!str) return 0;
+  const m = str.match(/\$[\d,]+/);
+  return m ? parseInt(m[0].replace(/[$,]/g, ''), 10) : 0;
+}
+
+function sortTrades(trades, key) {
+  if (key === 'disclosureDate') return trades;
+  const arr = [...trades];
+  if (key === 'transactionDate') {
+    arr.sort((a, b) => parseDate(b.transactionDate) - parseDate(a.transactionDate));
+  } else if (key === 'delay') {
+    arr.sort((a, b) => {
+      const da = (a.transactionDate && a.disclosureDate)
+        ? parseDate(a.disclosureDate) - parseDate(a.transactionDate) : -1;
+      const db = (b.transactionDate && b.disclosureDate)
+        ? parseDate(b.disclosureDate) - parseDate(b.transactionDate) : -1;
+      return db - da;
+    });
+  } else if (key === 'amount') {
+    arr.sort((a, b) => parseAmountLower(b.amount) - parseAmountLower(a.amount));
+  }
+  return arr;
+}
+
+// ─────────────────────────────────────────────────────────────────────
 // CARD BUILDER
 // ─────────────────────────────────────────────────────────────────────
 
@@ -238,9 +294,27 @@ function buildCard(trade) {
   const badgeClass = { buy: 'badge-buy', sell: 'badge-sell', exchange: 'badge-exchange' }[trade.tradeType] || 'badge-other';
   const badgeLabel = { buy: 'Purchase', sell: 'Sale', exchange: 'Exchange' }[trade.tradeType] || trade.rawType || 'Other';
 
-  const location   = trade.districtDisplay || trade.state;
-  const discDate   = formatDate(trade.disclosureDate);
-  const txDate     = formatDate(trade.transactionDate);
+  const location    = trade.districtDisplay || trade.state;
+  const discDate    = formatDate(trade.disclosureDate);
+  const txDate      = formatDate(trade.transactionDate);
+  const displayName = normalizeName(trade.memberName);
+  const displayDesc = trade.assetDesc ? escHtml(decodeEntities(trade.assetDesc)) : '';
+
+  const party     = trade.bioguide ? (partyByBioguide[trade.bioguide] || '') : '';
+  const partyHtml = party
+    ? `<span class="party-badge party-${party.toLowerCase()}">${escHtml(party)}</span>`
+    : '';
+
+  let delayHtml = '';
+  if (trade.transactionDate && trade.disclosureDate) {
+    const days = Math.round(
+      (new Date(trade.disclosureDate) - new Date(trade.transactionDate)) / 86400000
+    );
+    if (days >= 0) {
+      const cls = days > 45 ? 'delay-high' : days > 30 ? 'delay-med' : 'delay-low';
+      delayHtml = `<span class="disclosure-delay ${cls}" data-label="Delay">${days}d</span>`;
+    }
+  }
 
   const card = document.createElement('div');
   card.className = 'trade-card';
@@ -249,18 +323,20 @@ function buildCard(trade) {
     <div class="card-header">
       <span class="badge ${badgeClass}">${badgeLabel}</span>
       <span class="ticker">${escHtml(trade.ticker || 'N/A')}</span>
-      <span class="member-name">${escHtml(trade.memberName)}</span>
+      ${partyHtml}
+      <span class="member-name">${escHtml(displayName)}</span>
       ${location ? `<span class="member-meta">${escHtml(location)}</span>` : ''}
       <span class="chamber-tag">${escHtml(trade.chamber)}</span>
     </div>
 
     <div class="card-details">
-      ${trade.amount          ? `<span data-label="Amount">${escHtml(trade.amount)}</span>`    : ''}
-      ${discDate              ? `<span data-label="Disclosed">${escHtml(discDate)}</span>`     : ''}
+      ${trade.amount ? `<span data-label="Amount">${escHtml(trade.amount)}</span>`    : ''}
+      ${discDate     ? `<span data-label="Disclosed">${escHtml(discDate)}</span>`     : ''}
       ${txDate && txDate !== discDate ? `<span data-label="Trade date">${escHtml(txDate)}</span>` : ''}
+      ${delayHtml}
     </div>
 
-    ${trade.assetDesc ? `<div class="asset-desc">${escHtml(trade.assetDesc)}</div>` : ''}
+    ${displayDesc ? `<div class="asset-desc">${displayDesc}</div>` : ''}
 
     <button class="context-toggle" aria-expanded="false">
       <span class="toggle-arrow">▼</span>
@@ -297,10 +373,7 @@ function buildContextHTML(trade, committees) {
     html += '<ul class="committee-list">';
     for (const c of committees) {
       const titlePart = c.title ? ` <em style="color:#94a3b8">(${escHtml(c.title)})</em>` : '';
-      const descPart  = c.description
-        ? `<div class="committee-desc">${escHtml(c.description)}</div>`
-        : '';
-      html += `<li>${escHtml(c.name)}${titlePart}${descPart}</li>`;
+      html += `<li>${escHtml(c.name)}${titlePart}</li>`;
     }
     html += '</ul>';
   } else {
@@ -308,8 +381,9 @@ function buildContextHTML(trade, committees) {
   }
   html += '</div>';
 
-  // Source link
-  if (trade.ptrLink) {
+  // Source link — hidden for SSW Senate backfill records (no disclosureDate means pre-FMP historical data)
+  const isBackfill = trade.chamber === 'Senate' && !trade.disclosureDate;
+  if (trade.ptrLink && !isBackfill) {
     html += '<div class="context-section">';
     html += '<div class="context-label">Original disclosure</div>';
     html += `<a class="source-link" href="${escAttr(trade.ptrLink)}" target="_blank" rel="noopener noreferrer">`;

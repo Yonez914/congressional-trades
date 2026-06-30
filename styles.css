@@ -163,6 +163,12 @@ a:hover {
 .badge-exchange { background: #fef9c3; color: #92400e; }
 .badge-other    { background: #f1f5f9; color: #475569; }
 
+/* Party badge */
+.party-badge { font-size: 0.68rem; font-weight: 700; padding: 2px 6px; border-radius: 4px; white-space: nowrap; letter-spacing: 0.04em; }
+.party-r { background: #fee2e2; color: #b91c1c; }
+.party-d { background: #dbeafe; color: #1d4ed8; }
+.party-i { background: #f3e8ff; color: #7c3aed; }
+
 /* Stock ticker symbol */
 .ticker {
   font-size: 1rem;
@@ -214,6 +220,12 @@ a:hover {
   font-weight: 500;
 }
 
+/* ── Disclosure delay chip ── */
+
+.delay-low  { color: #64748b; }
+.delay-med  { color: #d97706; font-weight: 600; }
+.delay-high { color: #dc2626; font-weight: 600; }
+
 /* ── Asset description ── */
 
 .asset-desc {
@@ -261,7 +273,7 @@ a:hover {
 
 .context-panel {
   display: none;
-  padding: 14px 16px 16px;
+  padding: 14px 16px 10px;
   border-top: 1px solid #f1f5f9;
   background: #f8fafc;
   font-size: 0.84rem;
