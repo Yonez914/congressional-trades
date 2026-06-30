@@ -40,6 +40,96 @@ let partyByBioguide      = {};   // bioguide → 'R'|'D'|'I'
 let currentSort          = 'disclosureDate';
 
 // ─────────────────────────────────────────────────────────────────────
+// CONFLICT-OF-INTEREST DETECTION
+// ─────────────────────────────────────────────────────────────────────
+
+const TICKER_SECTORS = {
+  // Financial
+  WFC:'financial', JPM:'financial', BAC:'financial', GS:'financial',
+  MS:'financial', C:'financial', USB:'financial', 'BRK.B':'financial',
+  V:'financial', MA:'financial', AXP:'financial', COF:'financial',
+  SCHW:'financial', BLK:'financial', MET:'financial', PRU:'financial',
+  AFL:'financial', TRV:'financial', ALL:'financial', PGR:'financial',
+  FITB:'financial', RF:'financial', KEY:'financial', CFG:'financial',
+  // Defense / Aerospace
+  LMT:'defense', RTX:'defense', NOC:'defense', GD:'defense',
+  BA:'defense', HII:'defense', KTOS:'defense', LDOS:'defense',
+  SAIC:'defense', CACI:'defense', BWXT:'defense', MRCY:'defense',
+  // Energy / Oil & Gas
+  XOM:'energy', CVX:'energy', COP:'energy', PSX:'energy',
+  VLO:'energy', EOG:'energy', OXY:'energy', SLB:'energy',
+  HAL:'energy', BKR:'energy', DVN:'energy', MPC:'energy',
+  HES:'energy', FANG:'energy', APA:'energy', KMI:'energy',
+  WMB:'energy', ET:'energy', EPD:'energy',
+  // Healthcare / Pharma / Biotech
+  PFE:'healthcare', JNJ:'healthcare', MRK:'healthcare', ABBV:'healthcare',
+  BMY:'healthcare', LLY:'healthcare', AMGN:'healthcare', GILD:'healthcare',
+  BIIB:'healthcare', REGN:'healthcare', UNH:'healthcare', CVS:'healthcare',
+  CI:'healthcare', HUM:'healthcare', MRNA:'healthcare', VRTX:'healthcare',
+  MCK:'healthcare', ABC:'healthcare', CAH:'healthcare', ZTS:'healthcare',
+  ISRG:'healthcare', SYK:'healthcare', MDT:'healthcare', BSX:'healthcare',
+  // Tech / Telecom
+  AAPL:'tech', MSFT:'tech', GOOGL:'tech', GOOG:'tech', META:'tech',
+  AMZN:'tech', NVDA:'tech', AMD:'tech', INTC:'tech', QCOM:'tech',
+  CRM:'tech', ORCL:'tech', IBM:'tech', CSCO:'tech', AVGO:'tech',
+  TXN:'tech', AMAT:'tech', MU:'tech', NFLX:'tech', TSLA:'tech',
+  VZ:'tech', T:'tech', TMUS:'tech', CMCSA:'tech', CHTR:'tech',
+  // Agriculture
+  ADM:'agriculture', BG:'agriculture', CF:'agriculture',
+  DE:'agriculture', NTR:'agriculture', MOS:'agriculture',
+};
+
+const COMMITTEE_SECTOR_PATTERNS = {
+  financial: [
+    { re: /banking/i,            label: 'Banking Committee' },
+    { re: /financial services/i, label: 'Financial Services Committee' },
+    { re: /\bfinance\b/i,        label: 'Finance Committee' },
+  ],
+  defense: [
+    { re: /armed services/i,     label: 'Armed Services Committee' },
+    { re: /intelligence/i,       label: 'Intelligence Committee' },
+    { re: /foreign relations/i,  label: 'Foreign Relations Committee' },
+    { re: /foreign affairs/i,    label: 'Foreign Affairs Committee' },
+    { re: /homeland security/i,  label: 'Homeland Security Committee' },
+  ],
+  energy: [
+    { re: /energy and natural resources/i, label: 'Energy & Natural Resources Committee' },
+    { re: /energy and commerce/i,          label: 'Energy & Commerce Committee' },
+    { re: /natural resources/i,            label: 'Natural Resources Committee' },
+  ],
+  healthcare: [
+    { re: /health.*education.*labor/i, label: 'HELP Committee' },
+    { re: /health.*human services/i,   label: 'Health Committee' },
+    { re: /\bhealth\b/i,              label: 'Health Committee' },
+    { re: /aging/i,                    label: 'Aging Committee' },
+  ],
+  tech: [
+    { re: /commerce.*science.*transportation/i, label: 'Commerce Committee' },
+    { re: /science.*space.*technology/i,        label: 'Science Committee' },
+    { re: /communications.*technology/i,        label: 'Communications Committee' },
+  ],
+  agriculture: [
+    { re: /agriculture.*nutrition.*forestry/i, label: 'Agriculture Committee' },
+    { re: /agriculture/i,                      label: 'Agriculture Committee' },
+  ],
+};
+
+function getConflictFlag(trade) {
+  if (!trade.bioguide) return null;
+  const sector = TICKER_SECTORS[trade.ticker];
+  if (!sector) return null;
+  const committees = committeesByBioguide[trade.bioguide] || [];
+  const patterns   = COMMITTEE_SECTOR_PATTERNS[sector] || [];
+  for (const c of committees) {
+    const name = c.name || '';
+    for (const { re, label } of patterns) {
+      if (re.test(name)) return { label, sector };
+    }
+  }
+  return null;
+}
+
+// ─────────────────────────────────────────────────────────────────────
 // ENTRY POINT
 // ─────────────────────────────────────────────────────────────────────
 
@@ -376,6 +466,8 @@ function buildCard(trade) {
     </div>
 
     ${displayDesc ? `<div class="asset-desc">${displayDesc}</div>` : ''}
+
+    ${(() => { const cf = getConflictFlag(trade); return cf ? `<div class="conflict-flag">⚠ On ${escHtml(cf.label)} — ${cf.sector}-sector trade</div>` : ''; })()}
 
     <button class="context-toggle" aria-expanded="false">
       <span class="toggle-arrow">▼</span>
