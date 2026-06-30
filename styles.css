@@ -98,6 +98,29 @@ a:hover {
 }
 
 /* ============================================================
+   Header nav link
+   ============================================================ */
+
+.site-nav { margin-top: 12px; }
+.site-nav a { font-size: 0.85rem; color: #60a5fa; }
+.site-nav a:hover { color: #93c5fd; text-decoration: none; }
+
+/* ============================================================
+   About page sections
+   ============================================================ */
+
+.about-section { margin-bottom: 32px; }
+.about-section h2 { font-size: 1.05rem; font-weight: 600; color: #e2e8f0; margin-bottom: 10px; border-bottom: 1px solid #1a2744; padding-bottom: 8px; }
+.about-section p, .about-section li { color: #94a3b8; line-height: 1.75; font-size: 0.92rem; }
+.about-section ul { padding-left: 18px; margin-top: 6px; }
+.about-section li { margin-bottom: 4px; }
+
+.about-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin-top: 8px; }
+.about-table th { text-align: left; color: #64748b; font-weight: 600; text-transform: uppercase; font-size: 0.72rem; letter-spacing: 0.06em; padding: 6px 12px 6px 0; border-bottom: 1px solid #1a2744; }
+.about-table td { padding: 10px 12px 10px 0; color: #94a3b8; border-bottom: 1px solid #111d30; vertical-align: top; }
+.about-table td:first-child { color: #cbd5e1; font-weight: 500; white-space: nowrap; padding-right: 28px; }
+
+/* ============================================================
    Main content area
    ============================================================ */
 

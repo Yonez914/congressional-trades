@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About — Congressional Trade Tracker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <h1>Congressional Trade Tracker</h1>
+      <p class="tagline">
+        STOCK Act filings from U.S. lawmakers — updated daily, with committee context and links to original public disclosures.
+      </p>
+      <nav class="site-nav">
+        <a href="index.html">← Back to trades</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main-content">
+
+    <div class="value-statement" style="margin-bottom: 32px;">
+      <p class="value-headline">A free tool that surfaces every congressional stock trade filed under the STOCK Act — searchable, filterable, and linked back to the original public disclosure. Updated daily.</p>
+    </div>
+
+    <div class="about-section">
+      <h2>Why Does This Matter?</h2>
+      <p>Members of Congress sit on committees that write laws affecting the very companies they trade. The STOCK Act requires them to disclose trades — but allows up to 45 days of delay. By the time a filing is public, markets have already moved.</p>
+      <p style="margin-top: 10px;">This tool makes those filings searchable and connects each trade to the member's committee assignments. You can judge relevance yourself.</p>
+    </div>
+
+    <div class="about-section">
+      <h2>How Do I Use It?</h2>
+      <ul>
+        <li><strong style="color:#cbd5e1">Search</strong> by member name, stock ticker, or state abbreviation.</li>
+        <li><strong style="color:#cbd5e1">Filter</strong> by chamber (House / Senate) or trade type (purchases / sales).</li>
+        <li><strong style="color:#cbd5e1">Sort by Disclosure Delay</strong> to surface trades that took the longest to report — legally filed but suspiciously late.</li>
+        <li><strong style="color:#cbd5e1">Expand any card</strong> to see the member's committee assignments and a direct link to the original government filing.</li>
+      </ul>
+    </div>
+
+    <div class="about-section">
+      <h2>Where Does the Data Come From?</h2>
+      <table class="about-table">
+        <thead>
+          <tr>
+            <th>Source</th>
+            <th>What it covers</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><a href="https://financialmodelingprep.com" target="_blank" rel="noopener">Financial Modeling Prep</a></td>
+            <td>Daily STOCK Act filings — House + Senate, rolling updates. Includes PTR links to original disclosures.</td>
+          </tr>
+          <tr>
+            <td><a href="https://github.com/timothycarambat/senate-stock-watcher-data" target="_blank" rel="noopener">Senate Stock Watcher</a></td>
+            <td>Senate trade history back to ~2019, sourced from official Senate eFD filings and aggregated as open data.</td>
+          </tr>
+          <tr>
+            <td><a href="https://github.com/unitedstates/congress-legislators" target="_blank" rel="noopener">unitedstates/congress-legislators</a></td>
+            <td>Committee assignments for current members of Congress. Public domain, maintained by a community of civic coders.</td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="margin-top: 14px;">All trades ultimately originate from official government systems: the <a href="https://disclosures-clerk.house.gov" target="_blank" rel="noopener">House Financial Disclosures</a> portal and the <a href="https://efts.senate.gov" target="_blank" rel="noopener">Senate Electronic Financial Disclosure</a> system.</p>
+    </div>
+
+    <div class="about-section">
+      <h2>Coverage Notes</h2>
+      <p>These aren't hidden limitations — they're what the underlying public data allows:</p>
+      <ul style="margin-top: 10px;">
+        <li><strong style="color:#cbd5e1">Senate history</strong> — deep coverage back to ~2019 via Senate Stock Watcher, plus ongoing daily updates from FMP.</li>
+        <li><strong style="color:#cbd5e1">House history</strong> — recent trades only. No historical House archive is publicly available in machine-readable form; FMP captures the rolling daily feed.</li>
+        <li><strong style="color:#cbd5e1">Committee data</strong> — current members only. Retired or defeated members will show no committee information, since they no longer hold assignments.</li>
+        <li><strong style="color:#cbd5e1">Disclosure delay</strong> — STOCK Act allows up to 45 days from trade to disclosure. This tool shows the actual delay per trade, so you can see who files promptly and who waits.</li>
+      </ul>
+    </div>
+
+    <div class="about-section">
+      <h2>A Note on Use</h2>
+      <p>This tool is for transparency research — understanding patterns, conflicts of interest, and committee exposure. It is <strong style="color:#cbd5e1">not</strong> a copy-trading tool. By the time a disclosure is public, the trade is 45 days old. Past trades don't predict future ones.</p>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p><strong>Trade data</strong> from
+        <a href="https://financialmodelingprep.com" target="_blank" rel="noopener">Financial Modeling Prep (FMP)</a>
+        and <a href="https://github.com/timothycarambat/senate-stock-watcher-data" target="_blank" rel="noopener">Senate Stock Watcher</a> — aggregated from official STOCK Act filings and updated daily.
+      </p>
+      <p><strong>Committee data</strong> from
+        <a href="https://github.com/unitedstates/congress-legislators" target="_blank" rel="noopener">unitedstates/congress-legislators</a>
+        (public domain).
+      </p>
+      <p><strong>Original filings</strong> at
+        <a href="https://disclosures-clerk.house.gov" target="_blank" rel="noopener">House Clerk</a>
+        and
+        <a href="https://efts.senate.gov" target="_blank" rel="noopener">Senate eFD</a>.
+      </p>
+      <p style="margin-top: 12px; color:#334155; font-size:0.75rem">
+        This site presents public information for transparency purposes. Committee context is informational only.
+      </p>
+    </div>
+  </footer>
+
+</body>
+</html>
