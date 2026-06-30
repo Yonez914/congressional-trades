@@ -35,12 +35,108 @@ if (!process.env.FMP_API_KEY) {
 const API_KEY  = process.env.FMP_API_KEY;
 const BASE_URL = 'https://financialmodelingprep.com/stable';
 
+const SSW_URL         = 'https://raw.githubusercontent.com/timothycarambat/senate-stock-watcher-data/master/aggregate/all_transactions.json';
+const LEGISLATORS_URL = 'https://unitedstates.github.io/congress-legislators/legislators-current.json';
+
 if (!API_KEY || API_KEY === 'YOUR_KEY_HERE') {
   console.error('ERROR: FMP_API_KEY not set.');
   console.error('Add your key to config.js, or: $env:FMP_API_KEY="your_key"; node scripts/update-cache.mjs');
   process.exit(1);
 }
 
+
+// ── SSW helpers ───────────────────────────────────────────────────────────────
+
+function stripHtml(str) {
+  return (str || '').replace(/<[^>]*>/g, '').trim();
+}
+
+function convertDate(mmddyyyy) {
+  if (!mmddyyyy) return '';
+  const parts = mmddyyyy.split('/');
+  if (parts.length !== 3) return '';
+  const [mm, dd, yyyy] = parts;
+  if (!mm || !dd || !yyyy || yyyy.length !== 4) return '';
+  return `${yyyy}-${mm.padStart(2, '0')}-${dd.padStart(2, '0')}`;
+}
+
+function buildNameLookup(legislators) {
+  const lookup = new Map();
+  for (const leg of legislators) {
+    const bioguide = leg.id?.bioguide;
+    if (!bioguide) continue;
+    const first    = (leg.name?.first         || '').toLowerCase().trim();
+    const last     = (leg.name?.last          || '').toLowerCase().trim();
+    const official = (leg.name?.official_full || '').toLowerCase().trim();
+    if (official)         lookup.set(official,           bioguide);
+    if (first && last)    lookup.set(`${first} ${last}`, bioguide);
+  }
+  return lookup;
+}
+
+function resolveBioguide(senatorName, lookup) {
+  if (!senatorName) return '';
+  const lower = senatorName.toLowerCase().trim();
+  if (lookup.has(lower)) return lookup.get(lower);
+  const words = lower.split(/\s+/);
+  if (words.length >= 3) {
+    const firstLast = `${words[0]} ${words[words.length - 1]}`;
+    if (lookup.has(firstLast)) return lookup.get(firstLast);
+  }
+  return '';
+}
+
+// Fetch Senate Stock Watcher history and merge into cache (idempotent).
+// Runs every CI update — adds 0 new records once initial backfill is current.
+async function mergeSSW(cache, existingKeys) {
+  console.log('\nFetching Senate Stock Watcher historical data…');
+  const [sswRes, legRes] = await Promise.allSettled([
+    fetch(SSW_URL).then(r => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); }),
+    fetch(LEGISLATORS_URL).then(r => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); }),
+  ]);
+
+  if (sswRes.status === 'rejected') {
+    console.warn(`  SSW fetch failed: ${sswRes.reason.message} — skipping`);
+    return 0;
+  }
+
+  const sswTrades  = sswRes.value;
+  const nameLookup = legRes.status === 'fulfilled' ? buildNameLookup(legRes.value) : new Map();
+  console.log(`  ${sswTrades.length} raw SSW records`);
+
+  let added = 0;
+  for (const t of sswTrades) {
+    const rawTicker = (t.ticker || '').trim();
+    if (!rawTicker || rawTicker === '--') continue;
+
+    const rawType    = t.type || '';
+    const normalized = {
+      chamber:         'Senate',
+      memberName:      t.senator || '',
+      bioguide:        resolveBioguide(t.senator, nameLookup),
+      state:           '',
+      districtDisplay: '',
+      ticker:          rawTicker.toUpperCase(),
+      assetDesc:       stripHtml(t.asset_description),
+      tradeType:       classifyType(rawType),
+      rawType,
+      amount:          t.amount || '',
+      disclosureDate:  '',
+      transactionDate: convertDate(t.transaction_date),
+      ptrLink:         t.ptr_link || '',
+    };
+
+    const key = tradeKey(normalized);
+    if (!existingKeys.has(key)) {
+      cache.trades.push(normalized);
+      existingKeys.add(key);
+      added++;
+    }
+  }
+
+  console.log(`  SSW new: ${added} | cache total: ${cache.trades.length}`);
+  return added;
+}
 
 // ── Normalization (mirrors normalizeTrade in script.js — keep in sync) ────────
 
@@ -133,32 +229,35 @@ async function main() {
   const incoming = [...senateTrades, ...houseTrades];
   console.log(`\nFetched: ${senateTrades.length} Senate + ${houseTrades.length} House = ${incoming.length} total`);
 
-  // 4. Merge + deduplicate
-  let added = 0;
+  // 4. Merge + deduplicate FMP trades
+  let fmpAdded = 0;
   for (const trade of incoming) {
     const key = tradeKey(trade);
     if (!existingKeys.has(key)) {
       cache.trades.push(trade);
       existingKeys.add(key);
-      added++;
+      fmpAdded++;
     }
   }
-  console.log(`New: ${added}  |  Duplicates skipped: ${incoming.length - added}  |  Cache total: ${cache.trades.length}`);
+  console.log(`FMP new: ${fmpAdded}  |  Duplicates skipped: ${incoming.length - fmpAdded}  |  Cache total: ${cache.trades.length}`);
 
-  if (added === 0) {
-    console.log('Nothing new — cache file not rewritten.');
+  // 5. Merge SSW Senate historical data (idempotent — no-op once backfill is current)
+  const sswAdded = await mergeSSW(cache, existingKeys);
+
+  if (fmpAdded === 0 && sswAdded === 0) {
+    console.log('\nNothing new — cache file not rewritten.');
     return;
   }
 
-  // 5. Sort newest disclosure date first
-  // Fall back to transactionDate so SSW backfill records (no disclosureDate) sort correctly.
+  // 6. Sort newest disclosure date first
+  // Fall back to transactionDate for SSW records which have no disclosureDate.
   cache.trades.sort((a, b) => {
     const da = new Date(a.disclosureDate || a.transactionDate || '2000-01-01').getTime();
     const db = new Date(b.disclosureDate || b.transactionDate || '2000-01-01').getTime();
     return db - da;
   });
 
-  // 6. Write
+  // 7. Write
   cache.lastUpdated = new Date().toISOString();
   cache.tradeCount  = cache.trades.length;
 
