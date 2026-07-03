@@ -1,7 +1,52 @@
 {
-  "lastUpdated": "2026-07-02T10:33:13.494Z",
-  "tradeCount": 6438,
+  "lastUpdated": "2026-07-03T10:30:53.220Z",
+  "tradeCount": 6443,
   "trades": [
+    {
+      "chamber": "Senate",
+      "memberName": "Gary Peters",
+      "bioguide": "P000595",
+      "state": "MI",
+      "districtDisplay": "",
+      "ticker": "T",
+      "assetDesc": "AT&T Inc",
+      "tradeType": "buy",
+      "rawType": "Purchase",
+      "amount": "$1,001 - $15,000",
+      "disclosureDate": "2026-07-02",
+      "transactionDate": "2026-06-29",
+      "ptrLink": "https://efdsearch.senate.gov/search/view/ptr/40fbe259-f282-4982-a53f-1c7278d041cd/"
+    },
+    {
+      "chamber": "House",
+      "memberName": "David Taylor",
+      "bioguide": "T000490",
+      "state": "OH",
+      "districtDisplay": "OH-2",
+      "ticker": "IBP",
+      "assetDesc": "Installed Building Products Inc",
+      "tradeType": "buy",
+      "rawType": "Purchase",
+      "amount": "$1,001 - $15,000",
+      "disclosureDate": "2026-07-02",
+      "transactionDate": "2026-06-15",
+      "ptrLink": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20034897.pdf"
+    },
+    {
+      "chamber": "House",
+      "memberName": "David Taylor",
+      "bioguide": "T000490",
+      "state": "OH",
+      "districtDisplay": "OH-2",
+      "ticker": "CVX",
+      "assetDesc": "Chevron Corp",
+      "tradeType": "buy",
+      "rawType": "Purchase",
+      "amount": "$1,001 - $15,000",
+      "disclosureDate": "2026-07-02",
+      "transactionDate": "2026-06-15",
+      "ptrLink": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20034897.pdf"
+    },
     {
       "chamber": "House",
       "memberName": "Keith Self",
@@ -2658,6 +2703,21 @@
       "ptrLink": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/9116142.pdf"
     },
     {
+      "chamber": "House",
+      "memberName": "Ro Khanna",
+      "bioguide": "K000389",
+      "state": "CA",
+      "districtDisplay": "CA-17",
+      "ticker": "URI",
+      "assetDesc": "United Rentals Inc",
+      "tradeType": "sell",
+      "rawType": "Sale",
+      "amount": "$1,001 - $15,000",
+      "disclosureDate": "2026-06-11",
+      "transactionDate": "2026-05-01",
+      "ptrLink": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/9116142.pdf"
+    },
+    {
       "chamber": "Senate",
       "memberName": "James E Hon Banks",
       "bioguide": "B001299",
@@ -3510,6 +3570,21 @@
       "amount": "$1,001 - $15,000",
       "disclosureDate": "2026-05-01",
       "transactionDate": "2026-04-13",
+      "ptrLink": "https://efdsearch.senate.gov/search/view/ptr/e8a9cd50-e2c7-4cc3-a4f8-310aa734a85c/"
+    },
+    {
+      "chamber": "Senate",
+      "memberName": "Mark Warner",
+      "bioguide": "W000805",
+      "state": "VA",
+      "districtDisplay": "",
+      "ticker": "FIXD",
+      "assetDesc": "FIRST TRUST SMITH OPPRTNY FI",
+      "tradeType": "sell",
+      "rawType": "Sale",
+      "amount": "$1,001 - $15,000",
+      "disclosureDate": "2026-05-01",
+      "transactionDate": "2026-03-30",
       "ptrLink": "https://efdsearch.senate.gov/search/view/ptr/e8a9cd50-e2c7-4cc3-a4f8-310aa734a85c/"
     },
     {
