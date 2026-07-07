@@ -1,7 +1,22 @@
 {
-  "lastUpdated": "2026-07-04T10:04:17.103Z",
-  "tradeCount": 6506,
+  "lastUpdated": "2026-07-07T10:50:56.434Z",
+  "tradeCount": 6507,
   "trades": [
+    {
+      "chamber": "Senate",
+      "memberName": "Shelley Moore Capito",
+      "bioguide": "C001047",
+      "state": "WV",
+      "districtDisplay": "",
+      "ticker": "C",
+      "assetDesc": "Citigroup Inc",
+      "tradeType": "sell",
+      "rawType": "Sale",
+      "amount": "$1,001 - $15,000",
+      "disclosureDate": "2026-07-06",
+      "transactionDate": "2026-06-16",
+      "ptrLink": "https://efdsearch.senate.gov/search/view/ptr/4f4d76c6-52ab-4edb-884d-b6c43e7b1bbe/"
+    },
     {
       "chamber": "House",
       "memberName": "Gilbert Cisneros",
