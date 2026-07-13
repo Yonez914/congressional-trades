@@ -1,6 +1,6 @@
 {
-  "lastUpdated": "2026-07-12T09:46:53.133Z",
-  "tradeCount": 6705,
+  "lastUpdated": "2026-07-13T10:55:37.672Z",
+  "tradeCount": 6706,
   "trades": [
     {
       "chamber": "House",
@@ -2910,6 +2910,21 @@
       "amount": "$1,001 - $15,000",
       "disclosureDate": "2026-07-08",
       "transactionDate": "2026-06-02",
+      "ptrLink": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/9116206.pdf"
+    },
+    {
+      "chamber": "House",
+      "memberName": "Ro Khanna",
+      "bioguide": "K000389",
+      "state": "CA",
+      "districtDisplay": "CA-17",
+      "ticker": "JPM",
+      "assetDesc": "JPMorgan Chase & Co",
+      "tradeType": "buy",
+      "rawType": "Purchase",
+      "amount": "$1,001 - $15,000",
+      "disclosureDate": "2026-07-08",
+      "transactionDate": "2026-06-01",
       "ptrLink": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/9116206.pdf"
     },
     {
