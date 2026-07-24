@@ -1,7 +1,22 @@
 {
-  "lastUpdated": "2026-07-23T10:15:30.961Z",
-  "tradeCount": 6977,
+  "lastUpdated": "2026-07-24T10:11:49.331Z",
+  "tradeCount": 6978,
   "trades": [
+    {
+      "chamber": "House",
+      "memberName": "Debbie Dingell",
+      "bioguide": "D000355",
+      "state": "MI",
+      "districtDisplay": "MI-6",
+      "ticker": "FMCC",
+      "assetDesc": "Federal Home Loan Mortgage Corp",
+      "tradeType": "buy",
+      "rawType": "Purchase",
+      "amount": "$15,001 - $50,000",
+      "disclosureDate": "2026-07-23",
+      "transactionDate": "2026-07-14",
+      "ptrLink": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035048.pdf"
+    },
     {
       "chamber": "Senate",
       "memberName": "Jerry Moran",
