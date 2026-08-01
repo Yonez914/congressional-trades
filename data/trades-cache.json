@@ -1,7 +1,37 @@
 {
-  "lastUpdated": "2026-07-28T10:29:24.918Z",
-  "tradeCount": 6990,
+  "lastUpdated": "2026-08-01T09:53:34.422Z",
+  "tradeCount": 6992,
   "trades": [
+    {
+      "chamber": "House",
+      "memberName": "Cleo Fields",
+      "bioguide": "F000110",
+      "state": "LA",
+      "districtDisplay": "LA-6",
+      "ticker": "TSM",
+      "assetDesc": "Taiwan Semiconductor Manufacturing Co Ltd",
+      "tradeType": "buy",
+      "rawType": "Purchase",
+      "amount": "$1,001 - $15,000",
+      "disclosureDate": "2026-07-31",
+      "transactionDate": "2026-07-10",
+      "ptrLink": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035023.pdf"
+    },
+    {
+      "chamber": "House",
+      "memberName": "Kelly Louise Morrison",
+      "bioguide": "M001234",
+      "state": "MN",
+      "districtDisplay": "MN-3",
+      "ticker": "HONA",
+      "assetDesc": "HONEYWELL AEROSPACE INC",
+      "tradeType": "exchange",
+      "rawType": "Exchange",
+      "amount": "$15,001 - $50,000",
+      "disclosureDate": "2026-07-31",
+      "transactionDate": "2026-06-29",
+      "ptrLink": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20034972.pdf"
+    },
     {
       "chamber": "House",
       "memberName": "Jared Moskowitz",
