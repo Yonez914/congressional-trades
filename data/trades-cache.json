@@ -1,7 +1,22 @@
 {
-  "lastUpdated": "2026-08-01T09:53:34.422Z",
-  "tradeCount": 6992,
+  "lastUpdated": "2026-08-04T10:32:18.227Z",
+  "tradeCount": 6993,
   "trades": [
+    {
+      "chamber": "Senate",
+      "memberName": "Sheldon Whitehouse",
+      "bioguide": "W000802",
+      "state": "RI",
+      "districtDisplay": "",
+      "ticker": "LOW",
+      "assetDesc": "Lowe's Cos Inc",
+      "tradeType": "sell",
+      "rawType": "Sale",
+      "amount": "$1,001 - $15,000",
+      "disclosureDate": "2026-08-03",
+      "transactionDate": "2026-07-20",
+      "ptrLink": "https://efdsearch.senate.gov/search/view/ptr/96db6e64-f7c3-4483-b0aa-af10ba2bdbbd/"
+    },
     {
       "chamber": "House",
       "memberName": "Cleo Fields",
