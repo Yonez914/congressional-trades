@@ -1,6 +1,6 @@
 {
-  "lastUpdated": "2026-08-08T08:34:21.024Z",
-  "tradeCount": 7209,
+  "lastUpdated": "2026-08-09T08:35:42.509Z",
+  "tradeCount": 7210,
   "trades": [
     {
       "chamber": "House",
@@ -91,6 +91,21 @@
       "disclosureDate": "2026-08-07",
       "transactionDate": "2026-07-17",
       "ptrLink": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035146.pdf"
+    },
+    {
+      "chamber": "Senate",
+      "memberName": "Gary Peters",
+      "bioguide": "P000595",
+      "state": "MI",
+      "districtDisplay": "",
+      "ticker": "O",
+      "assetDesc": "Realty Income Corp",
+      "tradeType": "buy",
+      "rawType": "Purchase",
+      "amount": "$1,001 - $15,000",
+      "disclosureDate": "2026-08-07",
+      "transactionDate": "2026-07-23",
+      "ptrLink": "https://efdsearch.senate.gov/search/view/ptr/328a9b36-1205-4117-bdc4-cd7c3ccbcbbc/"
     },
     {
       "chamber": "House",
