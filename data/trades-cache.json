@@ -1,7 +1,22 @@
 {
-  "lastUpdated": "2026-08-18T08:29:13.377Z",
-  "tradeCount": 7446,
+  "lastUpdated": "2026-08-19T08:30:20.404Z",
+  "tradeCount": 7448,
   "trades": [
+    {
+      "chamber": "House",
+      "memberName": "Steve Cohen",
+      "bioguide": "C001068",
+      "state": "TN",
+      "districtDisplay": "TN-9",
+      "ticker": "JPM",
+      "assetDesc": "JPMorgan Chase & Co",
+      "tradeType": "buy",
+      "rawType": "Purchase",
+      "amount": "$100,001 - $250,000",
+      "disclosureDate": "2026-08-18",
+      "transactionDate": "2026-08-05",
+      "ptrLink": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035235.pdf"
+    },
     {
       "chamber": "Senate",
       "memberName": "John Boozman",
@@ -586,6 +601,21 @@
       "disclosureDate": "2026-08-17",
       "transactionDate": "2025-12-16",
       "ptrLink": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035130.pdf"
+    },
+    {
+      "chamber": "Senate",
+      "memberName": "John Boozman",
+      "bioguide": "B001236",
+      "state": "AR",
+      "districtDisplay": "",
+      "ticker": "SPYM",
+      "assetDesc": "TRADR 2X LONG SPY MNTHLY ETF",
+      "tradeType": "buy",
+      "rawType": "Purchase",
+      "amount": "$1,001 - $15,000",
+      "disclosureDate": "2026-08-17",
+      "transactionDate": "2026-07-02",
+      "ptrLink": "https://efdsearch.senate.gov/search/view/ptr/4184cc9a-78e0-45f3-84f7-642011e6ff98/"
     },
     {
       "chamber": "House",
