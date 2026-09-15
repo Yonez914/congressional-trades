@@ -1,6 +1,6 @@
 {
-  "lastUpdated": "2026-09-14T14:39:38.431Z",
-  "tradeCount": 7953,
+  "lastUpdated": "2026-09-15T13:04:31.760Z",
+  "tradeCount": 7957,
   "trades": [
     {
       "chamber": "Senate",
@@ -90,6 +90,66 @@
       "amount": "$1,001 - $15,000",
       "disclosureDate": "2026-09-14",
       "transactionDate": "2026-08-27",
+      "ptrLink": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035431.pdf"
+    },
+    {
+      "chamber": "House",
+      "memberName": "John Rose",
+      "bioguide": "R000612",
+      "state": "TN",
+      "districtDisplay": "TN-6",
+      "ticker": "GOOGL",
+      "assetDesc": "Alphabet Inc",
+      "tradeType": "sell",
+      "rawType": "Sale",
+      "amount": "$250,001 - $500,000",
+      "disclosureDate": "2026-09-14",
+      "transactionDate": "2025-06-03",
+      "ptrLink": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035444.pdf"
+    },
+    {
+      "chamber": "House",
+      "memberName": "Thomas H. Kean",
+      "bioguide": "",
+      "state": "NJ",
+      "districtDisplay": "NJ-7",
+      "ticker": "LIN",
+      "assetDesc": "Linde PLC",
+      "tradeType": "buy",
+      "rawType": "Purchase",
+      "amount": "$1,001 - $15,000",
+      "disclosureDate": "2026-09-14",
+      "transactionDate": "2026-08-10",
+      "ptrLink": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035431.pdf"
+    },
+    {
+      "chamber": "House",
+      "memberName": "John Rose",
+      "bioguide": "R000612",
+      "state": "TN",
+      "districtDisplay": "TN-6",
+      "ticker": "AMCPX",
+      "assetDesc": "AMERICAN FUNDS AMCAP FUND",
+      "tradeType": "sell",
+      "rawType": "Sale",
+      "amount": "$500,001 - $1,000,000",
+      "disclosureDate": "2026-09-14",
+      "transactionDate": "2025-06-03",
+      "ptrLink": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035445.pdf"
+    },
+    {
+      "chamber": "House",
+      "memberName": "Thomas H. Kean",
+      "bioguide": "",
+      "state": "NJ",
+      "districtDisplay": "NJ-7",
+      "ticker": "MTZ",
+      "assetDesc": "MasTec Inc",
+      "tradeType": "buy",
+      "rawType": "Purchase",
+      "amount": "$1,001 - $15,000",
+      "disclosureDate": "2026-09-14",
+      "transactionDate": "2026-08-21",
       "ptrLink": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035431.pdf"
     },
     {
