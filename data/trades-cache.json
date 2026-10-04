@@ -1,6 +1,6 @@
 {
-  "lastUpdated": "2026-10-03T12:58:16.390Z",
-  "tradeCount": 8251,
+  "lastUpdated": "2026-10-04T13:37:22.783Z",
+  "tradeCount": 8252,
   "trades": [
     {
       "chamber": "House",
@@ -10875,6 +10875,21 @@
       "amount": "$1,001 - $15,000",
       "disclosureDate": "2026-09-01",
       "transactionDate": "2026-08-13",
+      "ptrLink": "https://efdsearch.senate.gov/search/view/ptr/f8d003c0-ca1e-4c39-9d66-632d220180e1/"
+    },
+    {
+      "chamber": "Senate",
+      "memberName": "Sheldon Whitehouse",
+      "bioguide": "W000802",
+      "state": "RI",
+      "districtDisplay": "",
+      "ticker": "AMGN",
+      "assetDesc": "Amgen Inc. - Common Stock",
+      "tradeType": "sell",
+      "rawType": "Sale (Partial)",
+      "amount": "$1,001 - $15,000",
+      "disclosureDate": "2026-09-01",
+      "transactionDate": "2026-08-12",
       "ptrLink": "https://efdsearch.senate.gov/search/view/ptr/f8d003c0-ca1e-4c39-9d66-632d220180e1/"
     },
     {
