@@ -1,7 +1,37 @@
 {
-  "lastUpdated": "2026-10-17T11:55:53.444Z",
-  "tradeCount": 8661,
+  "lastUpdated": "2026-10-20T13:13:56.305Z",
+  "tradeCount": 8663,
   "trades": [
+    {
+      "chamber": "House",
+      "memberName": "Laurel Lee",
+      "bioguide": "L000597",
+      "state": "FL",
+      "districtDisplay": "FL-15",
+      "ticker": "BAC",
+      "assetDesc": "Bank of America Corp",
+      "tradeType": "sell",
+      "rawType": "Sale",
+      "amount": "$50,001 - $100,000",
+      "disclosureDate": "2026-10-19",
+      "transactionDate": "2026-08-24",
+      "ptrLink": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035490.pdf"
+    },
+    {
+      "chamber": "House",
+      "memberName": "Laurel Lee",
+      "bioguide": "L000597",
+      "state": "FL",
+      "districtDisplay": "FL-15",
+      "ticker": "NOK",
+      "assetDesc": "Nokia Corp",
+      "tradeType": "buy",
+      "rawType": "Purchase",
+      "amount": "$15,001 - $50,000",
+      "disclosureDate": "2026-10-19",
+      "transactionDate": "2026-09-18",
+      "ptrLink": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035490.pdf"
+    },
     {
       "chamber": "House",
       "memberName": "David Taylor",
