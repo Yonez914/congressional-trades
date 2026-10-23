@@ -1,7 +1,22 @@
 {
-  "lastUpdated": "2026-10-22T13:22:42.657Z",
-  "tradeCount": 8690,
+  "lastUpdated": "2026-10-23T13:01:12.018Z",
+  "tradeCount": 8691,
   "trades": [
+    {
+      "chamber": "Senate",
+      "memberName": "Armstrong, Alan (Senator)",
+      "bioguide": "A000383",
+      "state": "",
+      "districtDisplay": "",
+      "ticker": "WMB",
+      "assetDesc": "Williams Companies, Inc. (The) Common Stock",
+      "tradeType": "sell",
+      "rawType": "Sale (Full)",
+      "amount": "$250,001 - $500,000",
+      "disclosureDate": "2026-10-22",
+      "transactionDate": "2026-09-08",
+      "ptrLink": "https://efdsearch.senate.gov/search/view/ptr/6aa5ccb2-ff27-491a-9314-778b9ab37964/"
+    },
     {
       "chamber": "Senate",
       "memberName": "John Boozman",
