@@ -1,7 +1,37 @@
 {
-  "lastUpdated": "2026-10-23T13:01:12.018Z",
-  "tradeCount": 8691,
+  "lastUpdated": "2026-10-24T12:24:37.622Z",
+  "tradeCount": 8695,
   "trades": [
+    {
+      "chamber": "House",
+      "memberName": "Cleo Fields",
+      "bioguide": "F000110",
+      "state": "LA",
+      "districtDisplay": "LA-6",
+      "ticker": "NVDA",
+      "assetDesc": "NVIDIA Corporation",
+      "tradeType": "buy",
+      "rawType": "Purchase",
+      "amount": "$1,001 - $15,000",
+      "disclosureDate": "2026-10-23",
+      "transactionDate": "2026-10-01",
+      "ptrLink": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035669.pdf"
+    },
+    {
+      "chamber": "House",
+      "memberName": "Cleo Fields",
+      "bioguide": "F000110",
+      "state": "LA",
+      "districtDisplay": "LA-6",
+      "ticker": "TSM",
+      "assetDesc": "Taiwan Semiconductor Manufacturing Co Ltd",
+      "tradeType": "buy",
+      "rawType": "Purchase",
+      "amount": "$1,001 - $15,000",
+      "disclosureDate": "2026-10-23",
+      "transactionDate": "2026-10-09",
+      "ptrLink": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035669.pdf"
+    },
     {
       "chamber": "Senate",
       "memberName": "Armstrong, Alan (Senator)",
@@ -16,6 +46,36 @@
       "disclosureDate": "2026-10-22",
       "transactionDate": "2026-09-08",
       "ptrLink": "https://efdsearch.senate.gov/search/view/ptr/6aa5ccb2-ff27-491a-9314-778b9ab37964/"
+    },
+    {
+      "chamber": "House",
+      "memberName": "Darrell Issa",
+      "bioguide": "I000056",
+      "state": "CA",
+      "districtDisplay": "CA-48",
+      "ticker": "",
+      "assetDesc": "US Treasury Note 3.375% Due 09/15/28 CUSIP 91282CNY3",
+      "tradeType": "buy",
+      "rawType": "Purchase",
+      "amount": "$5,000,001 - $25,000,000",
+      "disclosureDate": "2026-10-22",
+      "transactionDate": "2026-10-08",
+      "ptrLink": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035700.pdf"
+    },
+    {
+      "chamber": "House",
+      "memberName": "Darrell Issa",
+      "bioguide": "I000056",
+      "state": "CA",
+      "districtDisplay": "CA-48",
+      "ticker": "",
+      "assetDesc": "US Treasury Note 3.375% Due 09/15/28 CUSIP 91282CNY3",
+      "tradeType": "sell",
+      "rawType": "Sale (Full)",
+      "amount": "$5,000,001 - $25,000,000",
+      "disclosureDate": "2026-10-22",
+      "transactionDate": "2026-10-14",
+      "ptrLink": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035700.pdf"
     },
     {
       "chamber": "Senate",
