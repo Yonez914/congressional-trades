@@ -1,7 +1,22 @@
 {
-  "lastUpdated": "2026-11-04T15:55:04.372Z",
-  "tradeCount": 8760,
+  "lastUpdated": "2026-11-05T16:00:19.791Z",
+  "tradeCount": 8761,
   "trades": [
+    {
+      "chamber": "House",
+      "memberName": "Robert E. Latta",
+      "bioguide": "L000566",
+      "state": "OH",
+      "districtDisplay": "OH-5",
+      "ticker": "FMAO",
+      "assetDesc": "Farmers & Merchants Bancorp Inc",
+      "tradeType": "buy",
+      "rawType": "Purchase",
+      "amount": "$1,001 - $15,000",
+      "disclosureDate": "2026-11-04",
+      "transactionDate": "2026-10-20",
+      "ptrLink": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035763.pdf"
+    },
     {
       "chamber": "Senate",
       "memberName": "Sheldon Whitehouse",
