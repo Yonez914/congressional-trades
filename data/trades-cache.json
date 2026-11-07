@@ -1,6 +1,6 @@
 {
-  "lastUpdated": "2026-11-06T15:35:30.237Z",
-  "tradeCount": 8771,
+  "lastUpdated": "2026-11-07T14:36:54.276Z",
+  "tradeCount": 8774,
   "trades": [
     {
       "chamber": "Senate",
@@ -121,6 +121,51 @@
       "disclosureDate": "2026-11-05",
       "transactionDate": "2026-10-23",
       "ptrLink": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035778.pdf"
+    },
+    {
+      "chamber": "House",
+      "memberName": "Josh Gottheimer",
+      "bioguide": "G000583",
+      "state": "NJ",
+      "districtDisplay": "NJ-5",
+      "ticker": "AMAT",
+      "assetDesc": "Applied Materials, Inc. - Common Stock",
+      "tradeType": "buy",
+      "rawType": "Purchase",
+      "amount": "$1,001 - $15,000",
+      "disclosureDate": "2026-11-05",
+      "transactionDate": "2026-10-26",
+      "ptrLink": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035770.pdf"
+    },
+    {
+      "chamber": "House",
+      "memberName": "Josh Gottheimer",
+      "bioguide": "G000583",
+      "state": "NJ",
+      "districtDisplay": "NJ-5",
+      "ticker": "BHE",
+      "assetDesc": "Benchmark Electronics, Inc. Common Stock",
+      "tradeType": "buy",
+      "rawType": "Purchase",
+      "amount": "$1,001 - $15,000",
+      "disclosureDate": "2026-11-05",
+      "transactionDate": "2026-10-12",
+      "ptrLink": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035770.pdf"
+    },
+    {
+      "chamber": "House",
+      "memberName": "Josh Gottheimer",
+      "bioguide": "G000583",
+      "state": "NJ",
+      "districtDisplay": "NJ-5",
+      "ticker": "TLK",
+      "assetDesc": "PT Telekomunikasi Indonesia, Tbk",
+      "tradeType": "sell",
+      "rawType": "Sale (Full)",
+      "amount": "$1,001 - $15,000",
+      "disclosureDate": "2026-11-05",
+      "transactionDate": "2026-10-15",
+      "ptrLink": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035770.pdf"
     },
     {
       "chamber": "House",
