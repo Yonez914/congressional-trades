@@ -1,7 +1,22 @@
 {
-  "lastUpdated": "2026-11-12T16:30:04.080Z",
-  "tradeCount": 8981,
+  "lastUpdated": "2026-11-13T15:51:41.831Z",
+  "tradeCount": 8984,
   "trades": [
+    {
+      "chamber": "House",
+      "memberName": "Lloyd Doggett",
+      "bioguide": "D000399",
+      "state": "TX",
+      "districtDisplay": "TX-37",
+      "ticker": "KO",
+      "assetDesc": "The Coca-Cola Co",
+      "tradeType": "buy",
+      "rawType": "Purchase",
+      "amount": "$1,001 - $15,000",
+      "disclosureDate": "2026-11-12",
+      "transactionDate": "2026-10-01",
+      "ptrLink": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035826.pdf"
+    },
     {
       "chamber": "House",
       "memberName": "Julie Johnson",
@@ -106,6 +121,36 @@
       "disclosureDate": "2026-11-11",
       "transactionDate": "2026-10-22",
       "ptrLink": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/9116403.pdf"
+    },
+    {
+      "chamber": "House",
+      "memberName": "Rick Allen",
+      "bioguide": "A000372",
+      "state": "GA",
+      "districtDisplay": "GA-12",
+      "ticker": "SHW",
+      "assetDesc": "Sherwin-Williams Company",
+      "tradeType": "sell",
+      "rawType": "Sale (Partial)",
+      "amount": "$1,001 - $15,000",
+      "disclosureDate": "2026-11-11",
+      "transactionDate": "2026-10-09",
+      "ptrLink": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035821.pdf"
+    },
+    {
+      "chamber": "House",
+      "memberName": "Rick Allen",
+      "bioguide": "A000372",
+      "state": "GA",
+      "districtDisplay": "GA-12",
+      "ticker": "",
+      "assetDesc": "US Treasury Note 3.5% DUE 1/31/30",
+      "tradeType": "buy",
+      "rawType": "Purchase",
+      "amount": "$15,001 - $50,000",
+      "disclosureDate": "2026-11-11",
+      "transactionDate": "2026-10-02",
+      "ptrLink": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035821.pdf"
     },
     {
       "chamber": "House",
